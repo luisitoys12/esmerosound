@@ -30,6 +30,7 @@ export interface TopSong {
   artist: string;
   albumCoverUrl: string;
   dataAiHint: string;
+  youtubeUrl: string;
 }
 
 export interface RadioEvent {

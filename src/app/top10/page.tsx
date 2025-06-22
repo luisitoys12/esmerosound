@@ -12,16 +12,16 @@ import type { TopSong } from "@/types";
 import { ListOrdered } from "lucide-react";
 
 const topSongs: TopSong[] = [
-  { rank: 1, title: "Ritmo Cósmico", artist: "Orion", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "space galaxy" },
-  { rank: 2, title: "Noche de Neón", artist: "Cyberpunkers", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "neon city" },
-  { rank: 3, title: "Corazón de Acero", artist: "La Máquina", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "metal heart" },
-  { rank: 4, title: "Viento del Desierto", artist: "Sol y Arena", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "desert wind" },
-  { rank: 5, title: "Olas de Tranquilidad", artist: "Mar Profundo", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "ocean waves" },
-  { rank: 6, title: "Frecuencia Urbana", artist: "DJ Metro", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "city street" },
-  { rank: 7, title: "Eco en la Montaña", artist: "Cumbres", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "mountain landscape" },
-  { rank: 8, title: "Jardín Secreto", artist: "Flora", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "secret garden" },
-  { rank: 9, title: "Luces del Norte", artist: "Aurora", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "aurora borealis" },
-  { rank: 10, title: "Pulso Eléctrico", artist: "Voltaje", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "electric pulse" },
+  { rank: 1, title: "Ritmo Cósmico", artist: "Orion", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "space galaxy", youtubeUrl: "https://www.youtube.com" },
+  { rank: 2, title: "Noche de Neón", artist: "Cyberpunkers", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "neon city", youtubeUrl: "https://www.youtube.com" },
+  { rank: 3, title: "Corazón de Acero", artist: "La Máquina", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "metal heart", youtubeUrl: "https://www.youtube.com" },
+  { rank: 4, title: "Viento del Desierto", artist: "Sol y Arena", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "desert wind", youtubeUrl: "https://www.youtube.com" },
+  { rank: 5, title: "Olas de Tranquilidad", artist: "Mar Profundo", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "ocean waves", youtubeUrl: "https://www.youtube.com" },
+  { rank: 6, title: "Frecuencia Urbana", artist: "DJ Metro", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "city street", youtubeUrl: "https://www.youtube.com" },
+  { rank: 7, title: "Eco en la Montaña", artist: "Cumbres", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "mountain landscape", youtubeUrl: "https://www.youtube.com" },
+  { rank: 8, title: "Jardín Secreto", artist: "Flora", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "secret garden", youtubeUrl: "https://www.youtube.com" },
+  { rank: 9, title: "Luces del Norte", artist: "Aurora", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "aurora borealis", youtubeUrl: "https://www.youtube.com" },
+  { rank: 10, title: "Pulso Eléctrico", artist: "Voltaje", albumCoverUrl: "https://placehold.co/100x100.png", dataAiHint: "electric pulse", youtubeUrl: "https://www.youtube.com" },
 ];
 
 export default function Top10Page() {
@@ -57,7 +57,14 @@ export default function Top10Page() {
                         <AvatarFallback>{song.title.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="font-semibold">{song.title}</div>
+                        <a
+                            href={song.youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold hover:underline hover:text-primary transition-colors"
+                        >
+                            {song.title}
+                        </a>
                       </div>
                     </div>
                   </TableCell>
