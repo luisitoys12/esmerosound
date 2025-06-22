@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Player from "@/components/player";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { NewsArticle } from "@/types";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { NewsArticle, TeamMember } from "@/types";
 
 const newsArticles: NewsArticle[] = [
   {
@@ -34,6 +35,37 @@ const newsArticles: NewsArticle[] = [
   },
 ];
 
+const teamMembers: TeamMember[] = [
+  {
+    id: "1",
+    name: "DJ Sol",
+    role: "Anfitrión de 'Amanecer Esmerosound'",
+    imageUrl: "https://placehold.co/200x200.png",
+    dataAiHint: "dj portrait",
+  },
+  {
+    id: "2",
+    name: "Rocker",
+    role: "Experto en 'Clásicos del Rock'",
+    imageUrl: "https://placehold.co/200x200.png",
+    dataAiHint: "rocker portrait",
+  },
+  {
+    id: "3",
+    name: "Blue Note",
+    role: "La voz del Jazz y Blues",
+    imageUrl: "https://placehold.co/200x200.png",
+    dataAiHint: "jazz musician",
+  },
+    {
+    id: "4",
+    name: "Party Mix",
+    role: "DJ de 'Viernes de Fiesta'",
+    imageUrl: "https://placehold.co/200x200.png",
+    dataAiHint: "club dj",
+  },
+]
+
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -41,7 +73,7 @@ export default function Home() {
         <Player />
       </section>
 
-      <section>
+      <section className="mb-12">
         <h2 className="mb-6 text-3xl font-bold tracking-tight text-center font-headline">
           Últimas Noticias
         </h2>
@@ -74,6 +106,29 @@ export default function Home() {
           ))}
         </div>
       </section>
+      
+      <section>
+        <h2 className="mb-6 text-3xl font-bold tracking-tight text-center font-headline">
+          Nuestro Equipo
+        </h2>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {teamMembers.map((member) => (
+            <Card key={member.id} className="text-center border-0 bg-transparent shadow-none">
+              <CardContent className="p-0">
+                  <Avatar className="h-32 w-32 mx-auto mb-4 rounded-full">
+                    <AvatarImage src={member.imageUrl} alt={member.name} data-ai-hint={member.dataAiHint} />
+                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                <h3 className="mb-1 text-lg font-semibold font-headline">
+                  {member.name}
+                </h3>
+                <p className="text-muted-foreground">{member.role}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
     </div>
   );
 }

@@ -8,6 +8,8 @@ import {
   LayoutDashboard,
   LogIn,
   Menu,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -25,6 +27,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import { useTheme } from "next-themes";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -32,6 +35,33 @@ const navLinks = [
   { href: "/top10", label: "Top 10" },
   { href: "/events", label: "Eventos" },
 ];
+
+function ModeToggle() {
+  const { setTheme } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Claro
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Oscuro
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          Sistema
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export default function Header() {
   const { user, loading, logOut } = useAuth();
@@ -94,7 +124,8 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-2">
+          <ModeToggle />
           {!loading && (user ? <UserMenu /> : <LoginButton />)}
         </div>
 
@@ -108,7 +139,11 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <div className="flex flex-col h-full">
-                <div className="flex-1 mt-8">
+                 <Link href="/" className="flex items-center gap-2 font-bold mb-8">
+                  <Radio className="h-6 w-6 text-primary" />
+                  <span className="font-headline text-lg">Esmerosound</span>
+                </Link>
+                <div className="flex-1">
                   <nav className="grid gap-6 text-lg font-medium">
                     {navLinks.map((link) => (
                       <SheetClose asChild key={link.href}>
@@ -122,8 +157,9 @@ export default function Header() {
                     ))}
                   </nav>
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 flex items-center justify-between">
                   {!loading && (user ? <UserMenu /> : <LoginButton />)}
+                  <ModeToggle />
                 </div>
               </div>
             </SheetContent>

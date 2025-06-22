@@ -58,6 +58,8 @@ export default function WebSettingsPage() {
         title: "¡Ajustes Guardados!",
         description: "La información de tu página web ha sido actualizada.",
       });
+      // Here you would typically save the values to a database or a config file
+      console.log(values);
     }, 1000);
   }
 
