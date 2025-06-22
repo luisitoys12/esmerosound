@@ -1,0 +1,60 @@
+"use client";
+
+import { useAuth } from "@/hooks/use-auth";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import Link from "next/link";
+import { Settings, Sparkles, Wrench } from "lucide-react";
+
+const adminFeatures = [
+    {
+        title: "Generador IA de Shows",
+        description: "Crea descripciones de programas atractivas usando inteligencia artificial.",
+        href: "/admin/show-generator",
+        icon: <Sparkles className="h-8 w-8 text-accent"/>
+    },
+    {
+        title: "Ajustes de Streaming",
+        description: "Configura tu fuente de streaming: Azuracast, Zenofm, o Live365.",
+        href: "/admin/settings",
+        icon: <Settings className="h-8 w-8 text-primary"/>
+    },
+    {
+        title: "Herramientas para Radio",
+        description: "Descubre una lista de herramientas útiles para potenciar tu radio online.",
+        href: "/admin/tools",
+        icon: <Wrench className="h-8 w-8 text-secondary-foreground"/>
+    }
+]
+
+export default function DashboardPage() {
+  const { user } = useAuth();
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold tracking-tight font-headline">
+        ¡Bienvenido, {user?.displayName || user?.email}!
+      </h1>
+      <p className="text-muted-foreground mt-2">
+        Desde aquí puedes gestionar todos los aspectos de Esmeralda Digital.
+      </p>
+
+      <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
+        {adminFeatures.map((feature) => (
+             <Card key={feature.href} className="hover:shadow-lg transition-shadow">
+                <Link href={feature.href} className="block h-full">
+                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                        <div className="p-3 rounded-full bg-muted">
+                            {feature.icon}
+                        </div>
+                        <CardTitle className="text-xl font-headline">{feature.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">{feature.description}</p>
+                    </CardContent>
+                </Link>
+            </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
