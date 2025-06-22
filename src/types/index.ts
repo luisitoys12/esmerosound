@@ -51,3 +51,22 @@ export interface TeamMember {
   imageUrl: string;
   dataAiHint: string;
 }
+
+export interface AzuracastSong {
+  id: string;
+  text: string;
+  artist: string;
+  title: string;
+  album: string;
+  art: string;
+}
+
+export interface AzuracastNowPlaying {
+  station: {
+    name: string;
+  };
+  now_playing: {
+    song: AzuracastSong;
+  };
+  is_online: boolean;
+}
