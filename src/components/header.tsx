@@ -32,8 +32,10 @@ import { useTheme } from "next-themes";
 const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/schedule", label: "Programación" },
+  { href: "/podcasts", label: "Podcasts" },
   { href: "/top10", label: "Top 10" },
   { href: "/events", label: "Eventos" },
+  { href: "/requests", label: "Solicitudes" },
 ];
 
 function ModeToggle() {

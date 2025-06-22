@@ -14,7 +14,13 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Esmerosound. Todos los
             derechos reservados.
           </p>
-          <nav className="flex gap-4">
+          <nav className="flex flex-wrap justify-center gap-4">
+             <Link
+              href="/report-issue"
+              className="text-sm text-muted-foreground hover:text-primary"
+            >
+              Reportar Error
+            </Link>
             <Link
               href="/terms"
               className="text-sm text-muted-foreground hover:text-primary"

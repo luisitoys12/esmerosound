@@ -70,3 +70,13 @@ export interface AzuracastNowPlaying {
   };
   is_online: boolean;
 }
+
+export interface Podcast {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  date: string;
+  audioUrl: string;
+  dataAiHint: string;
+}
