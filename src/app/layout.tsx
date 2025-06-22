@@ -10,7 +10,7 @@ import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Esmeralda Digital",
+  title: "Esmerosound",
   description: "Radio online con la mejor programación.",
 };
 

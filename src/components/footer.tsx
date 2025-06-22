@@ -8,10 +8,10 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <Link href="/" className="flex items-center gap-2 font-bold">
             <Radio className="h-6 w-6 text-primary" />
-            <span className="font-headline text-lg">Esmeralda Digital</span>
+            <span className="font-headline text-lg">Esmerosound</span>
           </Link>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Esmeralda Digital. Todos los
+            &copy; {new Date().getFullYear()} Esmerosound. Todos los
             derechos reservados.
           </p>
           <nav className="flex gap-4">

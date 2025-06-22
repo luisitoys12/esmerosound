@@ -23,3 +23,22 @@ export interface Schedule {
   sabado: Show[];
   domingo: Show[];
 }
+
+export interface TopSong {
+  rank: number;
+  title: string;
+  artist: string;
+  albumCoverUrl: string;
+  dataAiHint: string;
+}
+
+export interface RadioEvent {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  date: string;
+  time: string;
+  location: string;
+  dataAiHint: string;
+}

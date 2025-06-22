@@ -41,7 +41,7 @@ export default function WebSettingsPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "Esmeralda Digital",
+      title: "Esmerosound",
       description: "Radio online con la mejor programación.",
       facebookUrl: "",
       instagramUrl: "",

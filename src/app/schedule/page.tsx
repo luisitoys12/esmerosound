@@ -9,31 +9,31 @@ import type { Schedule, Show } from "@/types";
 
 const schedule: Schedule = {
   lunes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmeralda", host: "DJ Sol" },
+    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
     { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
     { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
     { time: "15:00 - 18:00", name: "Tarde de Pop", host: "Popstar" },
   ],
   martes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmeralda", host: "DJ Sol" },
+    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
     { time: "09:00 - 12:00", name: "Jazz y Más", host: "Blue Note" },
     { time: "12:00 - 15:00", name: "Hits Actuales", host: "DJ Fresh" },
     { time: "15:00 - 18:00", name: "Electrónica Global", host: "Beatmaster" },
   ],
   miercoles: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmeralda", host: "DJ Sol" },
+    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
     { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
     { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
     { time: "15:00 - 18:00", name: "Tarde de Pop", host: "Popstar" },
   ],
   jueves: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmeralda", host: "DJ Sol" },
+    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
     { time: "09:00 - 12:00", name: "Jazz y Más", host: "Blue Note" },
     { time: "12:00 - 15:00", name: "Hits Actuales", host: "DJ Fresh" },
     { time: "15:00 - 18:00", name: "Electrónica Global", host: "Beatmaster" },
   ],
   viernes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmeralda", host: "DJ Sol" },
+    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
     { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
     { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
     { time: "15:00 - 20:00", name: "Viernes de Fiesta", host: "Party Mix" },
@@ -46,7 +46,7 @@ const schedule: Schedule = {
   ],
   domingo: [
     { time: "08:00 - 11:00", name: "Domingo Clásico", host: "Maestro" },
-    { time: "11:00 - 14:00", name: "Especiales Esmeralda", host: "Varios" },
+    { time: "11:00 - 14:00", name: "Especiales Esmerosound", host: "Varios" },
     { time: "14:00 - 17:00", name: "Mundo Reggae", host: "DJ Roots" },
     { time: "17:00 - 20:00", name: "Cierre de Semana", host: "DJ Sunset" },
   ],

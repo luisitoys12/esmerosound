@@ -41,7 +41,7 @@ export default function DashboardPage() {
         ¡Bienvenido, {user?.displayName || user?.email}!
       </h1>
       <p className="text-muted-foreground mt-2">
-        Desde aquí puedes gestionar todos los aspectos de Esmeralda Digital.
+        Desde aquí puedes gestionar todos los aspectos de Esmerosound.
       </p>
 
       <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">

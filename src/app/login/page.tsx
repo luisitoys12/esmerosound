@@ -90,7 +90,7 @@ export default function LoginPage() {
             Panel de Administración
           </CardTitle>
           <CardDescription>
-            Inicia sesión para gestionar Esmeralda Digital
+            Inicia sesión para gestionar Esmerosound
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -104,7 +104,7 @@ export default function LoginPage() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="admin@esmeralda.com"
+                        placeholder="admin@esmerosound.com"
                         {...field}
                         disabled={isLoading}
                       />

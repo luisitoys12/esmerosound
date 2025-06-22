@@ -29,6 +29,8 @@ import {
 const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/schedule", label: "Programación" },
+  { href: "/top10", label: "Top 10" },
+  { href: "/events", label: "Eventos" },
 ];
 
 export default function Header() {
@@ -76,7 +78,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold">
           <Radio className="h-6 w-6 text-primary" />
-          <span className="font-headline text-lg">Esmeralda Digital</span>
+          <span className="font-headline text-lg">Esmerosound</span>
         </Link>
 
         {/* Desktop Navigation */}

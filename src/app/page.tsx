@@ -7,7 +7,7 @@ import type { NewsArticle } from "@/types";
 const newsArticles: NewsArticle[] = [
   {
     id: "1",
-    title: "Nuevo Show de Mañana: 'Amanecer Esmeralda'",
+    title: "Nuevo Show de Mañana: 'Amanecer Esmerosound'",
     excerpt: "Sintoniza cada mañana para empezar tu día con la mejor energía y la música que te gusta.",
     imageUrl: "https://placehold.co/600x400.png",
     category: "Novedades",
