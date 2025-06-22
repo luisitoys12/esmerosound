@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import CookieBanner from "@/components/cookie-banner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -41,6 +42,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <Toaster />
+            <CookieBanner />
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -16,13 +16,13 @@ export default function Footer() {
           </p>
           <nav className="flex gap-4">
             <Link
-              href="#"
+              href="/terms"
               className="text-sm text-muted-foreground hover:text-primary"
             >
               Términos
             </Link>
             <Link
-              href="#"
+              href="/privacy"
               className="text-sm text-muted-foreground hover:text-primary"
             >
               Privacidad

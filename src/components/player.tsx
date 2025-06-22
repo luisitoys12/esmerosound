@@ -114,7 +114,7 @@ export default function Player() {
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src="/placeholder-audio.mp3" preload="none" />
+      <audio ref={audioRef} src="https://radio.trabullnetwork.pro/listen/esmerosound/radio.mp3" preload="none" crossOrigin="anonymous" />
     </Card>
   );
 }
