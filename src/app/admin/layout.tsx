@@ -24,6 +24,7 @@ import {
   Wrench,
   User,
   LogOut,
+  Globe,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -90,6 +91,14 @@ export default function AdminLayout({
                 <Link href="/admin/tools">
                   <Wrench />
                   Herramientas
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/admin/web">
+                  <Globe />
+                  Web
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

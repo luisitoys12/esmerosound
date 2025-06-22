@@ -3,7 +3,7 @@
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
-import { Settings, Sparkles, Wrench } from "lucide-react";
+import { Settings, Sparkles, Wrench, Globe } from "lucide-react";
 
 const adminFeatures = [
     {
@@ -23,6 +23,12 @@ const adminFeatures = [
         description: "Descubre una lista de herramientas útiles para potenciar tu radio online.",
         href: "/admin/tools",
         icon: <Wrench className="h-8 w-8 text-secondary-foreground"/>
+    },
+    {
+        title: "Página Web",
+        description: "Personaliza el título, descripción y redes sociales de tu sitio.",
+        href: "/admin/web",
+        icon: <Globe className="h-8 w-8 text-chart-3" />
     }
 ]
 
