@@ -25,6 +25,7 @@ import {
   User,
   LogOut,
   Globe,
+  Newspaper,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -75,6 +76,14 @@ export default function AdminLayout({
                 <Link href="/admin/show-generator">
                   <Sparkles />
                   Generador IA
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/admin/news">
+                  <Newspaper />
+                  Noticias
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
