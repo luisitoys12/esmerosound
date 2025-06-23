@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación de Esmerosound</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2, h3, h4 {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        code {
+            background-color: #eef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            padding: 0;
+            background: none;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .alert-info {
+            background-color: #e6f7ff;
+            border-left: 5px solid #1890ff;
+        }
+         .alert-warning {
+            background-color: #fffbe6;
+            border-left: 5px solid #faad14;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Documentación de Esmerosound</h1>
+
+        <div id="guia-usuario" class="section">
+            <h2>Guía de Usuario</h2>
+            <p>¡Bienvenido a Esmerosound! Aquí te explicamos las funcionalidades clave de la aplicación para que disfrutes al máximo tu experiencia.</p>
+            
+            <h3>Funcionalidades Principales</h3>
+            <ul>
+                <li><strong>Reproductor en Vivo:</strong> En la página de inicio, el reproductor te permite escuchar la transmisión en vivo. Puedes controlar el volumen, ver la canción actual y acceder al historial reciente de canciones.</li>
+                <li><strong>Programación:</strong> En la sección "Programación", puedes ver el horario de todos nuestros shows para cada día de la semana.</li>
+                <li><strong>Podcasts:</strong> ¿Te perdiste un programa? Encuéntralo en la sección de "Podcasts" y escúchalo cuando quieras.</li>
+                <li><strong>Equipo:</strong> Conoce a nuestros locutores en la sección "Equipo". Haz clic en un miembro para ver su perfil detallado, biografía y redes sociales.</li>
+                <li><strong>Top 10:</strong> Descubre las canciones más populares de la semana y mira sus videoclips directamente desde la página.</li>
+                <li><strong>Solicitudes:</strong> ¿Quieres escuchar una canción que no está sonando? Ve a "Solicitudes" y pídenosla.</li>
+                <li><strong>Video en Vivo:</strong> Cuando estemos transmitiendo en video, podrás verlo en esta sección.</li>
+            </ul>
+        </div>
+        
+        <div id="gestion-contenido" class="section">
+            <h2>Gestión de Contenido (Para Administradores)</h2>
+            <p>El panel de administración (accesible desde <code>/login</code>) te permite gestionar el contenido dinámico del sitio web. A continuación se detalla qué controla cada sección:</p>
+            <ul>
+                <li><strong>Generador IA de Shows:</strong> Crea descripciones atractivas para programas usando inteligencia artificial. Estas descripciones pueden ser utilizadas para promocionar los shows.</li>
+                <li><strong>Gestionar Noticias:</strong> Añade, edita y elimina los artículos que aparecen en la sección "Últimas Noticias" de la página principal y en la página de la noticia.</li>
+                <li><strong>Gestionar Slideshow:</strong> Controla los banners promocionales que se muestran en el carrusel de la página de inicio. Puedes cambiar imágenes, títulos y enlaces.</li>
+                <li><strong>Gestionar Equipo:</strong> Añade, edita o elimina los perfiles de los locutores que se muestran en la página "Equipo" y en sus páginas de perfil individuales.</li>
+                <li><strong>Ajustes de Streaming:</strong> Configura la fuente de tu transmisión de audio (Azuracast, Zenofm, etc.). Esto afecta directamente al reproductor en vivo.</li>
+                <li><strong>Herramientas para Radio:</strong> Una página estática con recursos útiles para la gestión de una radio online.</li>
+                <li><strong>Página Web:</strong> Personaliza el título, la descripción general del sitio y los enlaces a redes sociales que aparecen en el pie de página.</li>
+            </ul>
+            <p><strong>Nota:</strong> La programación de shows y el contenido de páginas como "Top 10" o "Podcasts" actualmente se gestionan directamente desde el código fuente (en los archivos dentro de <code>src/lib/</code>) para un control más detallado.</p>
+        </div>
+
+
+        <div id="guia-instalacion" class="section">
+            <h2>Guía de Instalación y Despliegue</h2>
+            
+             <div class="alert alert-warning">
+                <h4>Licenciamiento</h4>
+                <p>Esmerosound es un software con licencia de código privado. Para utilizarlo, necesitas una clave de licencia válida. Por favor, contacta a <strong>cushmediagroup@gmail.com</strong> para solicitar tu licencia. Encontrarás un ejemplo de clave en el archivo <code>licencias.txt</code> de tu proyecto.</p>
+            </div>
+
+            <h3>Requisitos Previos</h3>
+            <ul>
+                <li>Node.js (versión 20 o superior)</li>
+                <li>npm, yarn o pnpm</li>
+                <li>Docker y Docker Compose (para despliegue con Docker)</li>
+                <li>Credenciales de un proyecto de Firebase</li>
+            </ul>
+
+            <h3>Configuración de Firebase</h3>
+            <p>Para que la aplicación funcione correctamente, necesitas conectar un proyecto de Firebase. Sigue estos pasos:</p>
+            <ol>
+                <li>Crea un proyecto en la <a href="https://console.firebase.google.com/" target="_blank">consola de Firebase</a>.</li>
+                <li>Dentro de tu proyecto, ve a "Project Settings" y crea una nueva aplicación web.</li>
+                <li>Copia las credenciales de configuración de Firebase.</li>
+                <li>En la raíz de tu proyecto, crea un archivo llamado <code>.env.local</code> y pega tus credenciales con el siguiente formato:
+                    <pre><code>NEXT_PUBLIC_FIREBASE_API_KEY=AIza...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=12345...
+NEXT_PUBLIC_FIREBASE_APP_ID=1:12345...:web:...</code></pre>
+                </li>
+                 <li>En la consola de Firebase, ve a la sección "Firestore Database" y crea una base de datos en modo de producción.</li>
+                 <li>Ve a "Authentication" y habilita los proveedores de inicio de sesión que desees (Email/Contraseña y Google son los configurados por defecto).</li>
+            </ol>
+            
+            <hr>
+
+            <h3>Opción 1: Despliegue con Docker (Linux)</h3>
+            <p>Este método es ideal para un servidor privado virtual (VPS) o un entorno local controlado.</p>
+            <h4>Paso 1: Clonar el Proyecto</h4>
+            <p>Asegúrate de tener el código fuente en tu máquina.</p>
+            <h4>Paso 2: Configurar Variables de Entorno</h4>
+            <p>Crea el archivo <code>.env.local</code> como se describió en la sección de Firebase.</p>
+            <h4>Paso 3: Levantar el Entorno</h4>
+            <p>Desde la raíz de tu proyecto, ejecuta el siguiente comando para construir y levantar los contenedores de Docker:</p>
+            <pre><code>docker-compose up -d --build</code></pre>
+            <p>Una vez que el proceso termine, la aplicación estará disponible en la dirección IP de tu máquina en el puerto 9002 (ej: <code>http://192.168.1.10:9002</code>) o en <code>http://localhost:9002</code> si accedes desde la misma máquina.</p>
+
+            <hr>
+
+            <h3>Opción 2: Despliegue en Vercel / Netlify (Recomendado)</h3>
+            <p>Estas plataformas están optimizadas para aplicaciones Next.js y ofrecen un proceso de despliegue muy sencillo.</p>
+            <h4>Paso 1: Sube tu Código a GitHub/GitLab/Bitbucket</h4>
+            <p>Asegúrate de que tu proyecto esté en un repositorio de Git.</p>
+            <h4>Paso 2: Conecta tu Repositorio</h4>
+            <ol>
+                <li>Regístrate en Vercel o Netlify.</li>
+                <li>Crea un nuevo proyecto e importa tu repositorio desde Git.</li>
+                <li>La plataforma detectará automáticamente que es un proyecto Next.js y configurará los comandos de construcción (<code>next build</code>) y el directorio de salida.</li>
+            </ol>
+            <h4>Paso 3: Configura las Variables de Entorno</h4>
+            <p>En el panel de configuración de tu proyecto en Vercel/Netlify, ve a la sección de "Environment Variables" y añade las mismas variables de tu archivo <code>.env.local</code> (<code>NEXT_PUBLIC_FIREBASE_API_KEY</code>, etc.).</p>
+            <h4>Paso 4: Desplegar</h4>
+            <p>Haz clic en "Deploy". La plataforma construirá y desplegará tu sitio, proporcionándote una URL pública.</p>
+
+            <hr>
+            
+             <div class="alert alert-info">
+                <h4>Nota sobre cPanel y Plesk</h4>
+                <p>Esta aplicación está construida con Next.js y requiere un entorno Node.js para ejecutarse. Los hostings tradicionales como cPanel o Plesk generalmente no son compatibles, a menos que ofrezcan soporte específico para aplicaciones Node.js (a veces como un complemento de pago). Intentar subir los archivos a un hosting de este tipo sin el soporte adecuado no funcionará. Para un despliegue sin complicaciones, recomendamos encarecidamente usar Vercel, Netlify o un VPS con Docker.</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
