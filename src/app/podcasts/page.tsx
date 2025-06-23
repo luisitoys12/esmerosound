@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import type { Podcast } from "@/types";
-import { PlayCircle, Calendar, Headphones } from "lucide-react";
+import { PlayCircle, Calendar, Headphones, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const podcasts: Podcast[] = [
   {
@@ -35,6 +39,19 @@ const podcasts: Podcast[] = [
 ];
 
 export default function PodcastsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredPodcasts = useMemo(() => {
+    if (!searchQuery) {
+      return podcasts;
+    }
+    return podcasts.filter(
+      (podcast) =>
+        podcast.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        podcast.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
@@ -46,43 +63,69 @@ export default function PodcastsPage() {
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {podcasts.map((podcast) => (
-          <Card
-            key={podcast.id}
-            className="overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl flex flex-col"
-          >
-            <CardHeader className="p-0 relative">
-              <Image
-                src={podcast.imageUrl}
-                alt={podcast.title}
-                width={600}
-                height={400}
-                className="object-cover w-full h-48"
-                data-ai-hint={podcast.dataAiHint}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-               <Button size="icon" className="absolute bottom-4 right-4 h-12 w-12 rounded-full">
+      <div className="mb-8 max-w-lg mx-auto">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Buscar podcasts por título o descripción..."
+            className="w-full pl-10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {filteredPodcasts.length > 0 ? (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {filteredPodcasts.map((podcast) => (
+            <Card
+              key={podcast.id}
+              className="overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl flex flex-col"
+            >
+              <CardHeader className="p-0 relative">
+                <Image
+                  src={podcast.imageUrl}
+                  alt={podcast.title}
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-48"
+                  data-ai-hint={podcast.dataAiHint}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <Button
+                  size="icon"
+                  className="absolute bottom-4 right-4 h-12 w-12 rounded-full"
+                >
                   <PlayCircle className="h-6 w-6" />
                 </Button>
-            </CardHeader>
-            <CardContent className="p-6 flex flex-col flex-grow">
-              <CardTitle className="font-headline text-xl mb-2">{podcast.title}</CardTitle>
-              <CardDescription className="flex-grow mb-4">{podcast.description}</CardDescription>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mt-auto border-t pt-4">
+              </CardHeader>
+              <CardContent className="p-6 flex flex-col flex-grow">
+                <CardTitle className="font-headline text-xl mb-2">
+                  {podcast.title}
+                </CardTitle>
+                <CardDescription className="flex-grow mb-4">
+                  {podcast.description}
+                </CardDescription>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground mt-auto border-t pt-4">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" />
                     <span>{podcast.date}</span>
                   </div>
-                   <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <Headphones className="h-4 w-4 text-primary" />
                     <span>Escuchar ahora</span>
                   </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-muted-foreground">
+          No se encontraron podcasts con tu búsqueda.
+        </p>
+      )}
     </div>
   );
 }

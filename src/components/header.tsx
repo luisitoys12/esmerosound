@@ -10,6 +10,7 @@ import {
   Menu,
   Moon,
   Sun,
+  ChevronDown,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -29,14 +30,20 @@ import {
 } from "@/components/ui/sheet";
 import { useTheme } from "next-themes";
 
-const navLinks = [
+const mainNavLinks = [
   { href: "/", label: "Inicio" },
   { href: "/schedule", label: "Programación" },
   { href: "/podcasts", label: "Podcasts" },
   { href: "/top10", label: "Top 10" },
+];
+
+const moreNavLinks = [
   { href: "/events", label: "Eventos" },
   { href: "/requests", label: "Solicitudes" },
+  { href: "/contact", label: "Contacto" },
 ];
+
+const allNavLinks = [...mainNavLinks, ...moreNavLinks];
 
 function ModeToggle() {
   const { setTheme } = useTheme();
@@ -115,7 +122,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {mainNavLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -124,6 +131,19 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus:outline-none">
+              Ver más
+              <ChevronDown className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {moreNavLinks.map((link) => (
+                <DropdownMenuItem key={link.href} asChild>
+                  <Link href={link.href}>{link.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
@@ -147,7 +167,7 @@ export default function Header() {
                 </Link>
                 <div className="flex-1">
                   <nav className="grid gap-6 text-lg font-medium">
-                    {navLinks.map((link) => (
+                    {allNavLinks.map((link) => (
                       <SheetClose asChild key={link.href}>
                         <Link
                           href={link.href}

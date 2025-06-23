@@ -15,6 +15,12 @@ export default function Footer() {
             derechos reservados.
           </p>
           <nav className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/contact"
+              className="text-sm text-muted-foreground hover:text-primary"
+            >
+              Contacto
+            </Link>
              <Link
               href="/report-issue"
               className="text-sm text-muted-foreground hover:text-primary"

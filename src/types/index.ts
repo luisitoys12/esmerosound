@@ -68,6 +68,10 @@ export interface AzuracastNowPlaying {
   now_playing: {
     song: AzuracastSong;
   };
+  song_history: {
+    song: AzuracastSong;
+    played_at: number;
+  }[];
   is_online: boolean;
 }
 
