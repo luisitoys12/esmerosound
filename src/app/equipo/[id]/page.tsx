@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Twitter, Instagram, ArrowLeft, Mic } from "lucide-react";
 import Link from "next/link";
 
-export default async function MemberProfilePage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function MemberProfilePage({ params }: PageProps) {
   const member = await getTeamMemberById(params.id);
 
   if (!member) {

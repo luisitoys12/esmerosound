@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Despliegue y Uso - Esmerosound</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            color: #1a202c;
+            line-height: 1.2;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+        }
+        p, li {
+            font-size: 1em;
+            color: #4a5568;
+        }
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        .card {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .warning {
+            background-color: #fffaf0;
+            border-left: 4px solid #f6e05e;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .list li::before {
+            content: '✓';
+            color: #38a169;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guía de Despliegue y Uso: Esmerosound</h1>
+        <p>Bienvenido a la guía completa de Esmerosound. Este documento te ayudará a instalar, desplegar y personalizar tu propia instancia del sitio web.</p>
+
+        <h2>1. Requisitos Previos</h2>
+        <p>Antes de empezar, asegúrate de tener instalado lo siguiente:</p>
+        <ul class="list">
+            <li><strong>Node.js:</strong> Versión 20.x o superior.</li>
+            <li><strong>Git:</strong> Para clonar el repositorio.</li>
+            <li><strong>Cuenta de Firebase:</strong> Necesitarás un proyecto de Firebase para la base de datos y la autenticación.</li>
+        </ul>
+
+        <h2>2. Configuración de Firebase</h2>
+        <p>Este proyecto utiliza Firebase para la gestión de contenido dinámico. Sigue estos pasos:</p>
+        <ol>
+            <li>Ve a la <a href="https://console.firebase.google.com/" target="_blank">Consola de Firebase</a> y crea un nuevo proyecto.</li>
+            <li>Dentro de tu proyecto, ve a <strong>Authentication</strong> y habilita el proveedor de <strong>Email/Contraseña</strong> y <strong>Google</strong>.</li>
+            <li>Ve a <strong>Firestore Database</strong> y crea una base de datos en modo de producción.</li>
+            <li>Ve a la configuración del proyecto (icono de engranaje) y, en la sección "Tus apps", crea una nueva aplicación web.</li>
+            <li>Copia las credenciales de configuración de Firebase (el objeto `firebaseConfig`).</li>
+        </ol>
+
+        <div class="warning">
+            <p><strong>¡Importante!</strong> Necesitas crear un archivo <code>.env.local</code> en la raíz de tu proyecto para las credenciales. Estas variables son necesarias tanto para el desarrollo local como para el despliegue.</p>
+        </div>
+        
+        <h3>Archivo <code>.env.local</code></h3>
+        <p>Crea el archivo <code>.env.local</code> en la raíz del proyecto y añade tus credenciales de Firebase así:</p>
+        <pre><code>NEXT_PUBLIC_FIREBASE_API_KEY="TU_API_KEY"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="TU_AUTH_DOMAIN"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="TU_PROJECT_ID"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="TU_STORAGE_BUCKET"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="TU_SENDER_ID"
+NEXT_PUBLIC_FIREBASE_APP_ID="TU_APP_ID"</code></pre>
+        
+        <h2>3. Instalación Local</h2>
+        <div class="card">
+            <p>Para ejecutar el proyecto en tu máquina local:</p>
+            <pre><code># 1. Clona el repositorio
+git clone https://github.com/tu-usuario/esmerosound.git
+cd esmerosound
+
+# 2. Crea el archivo .env.local con tus credenciales de Firebase
+
+# 3. Instala las dependencias
+npm install
+
+# 4. Inicia el servidor de desarrollo
+npm run dev</code></pre>
+            <p>La aplicación estará disponible en <code>http://localhost:9002</code>.</p>
+        </div>
+
+        <h2>4. Despliegue</h2>
+        <p>Este proyecto está optimizado para ser desplegado en varias plataformas modernas.</p>
+
+        <h3>Vercel (Recomendado)</h3>
+        <div class="card">
+            <p>Vercel es la plataforma ideal para desplegar aplicaciones Next.js.</p>
+            <ol>
+                <li>Haz un fork de este repositorio en tu cuenta de GitHub.</li>
+                <li>Ve a <a href="https://vercel.com/" target="_blank">Vercel</a> e inicia sesión con tu cuenta de GitHub.</li>
+                <li>Crea un nuevo proyecto e importa tu repositorio.</li>
+                <li>Vercel detectará automáticamente que es un proyecto Next.js.</li>
+                <li>Ve a la configuración del proyecto en Vercel (Settings -> Environment Variables) y añade las mismas variables de tu archivo <code>.env.local</code>.</li>
+                <li>¡Listo! Vercel desplegará tu sitio y se actualizará automáticamente con cada `push` a la rama `main`.</li>
+            </ol>
+        </div>
+
+        <h3>Netlify</h3>
+        <div class="card">
+            <p>El proceso es muy similar al de Vercel.</p>
+             <ol>
+                <li>Conecta tu repositorio de GitHub a Netlify.</li>
+                <li>Netlify debería detectar la configuración de Next.js.</li>
+                <li>Añade tus variables de entorno de Firebase en la configuración del sitio (Site settings -> Build & deploy -> Environment).</li>
+                <li>Despliega el sitio.</li>
+            </ol>
+        </div>
+
+        <h3>Docker Compose</h3>
+        <div class="card">
+            <p>Si prefieres usar Docker, el repositorio incluye un <code>Dockerfile</code> y un <code>docker-compose.yml</code>.</p>
+             <ol>
+                <li>Asegúrate de tener Docker y Docker Compose instalados.</li>
+                <li>Crea tu archivo <code>.env.local</code> como se describe arriba.</li>
+                <li>Ejecuta el siguiente comando para construir y levantar el contenedor:</li>
+            </ol>
+            <pre><code>docker-compose up -d --build</code></pre>
+            <p>La aplicación estará disponible en <code>http://localhost:9002</code>.</p>
+        </div>
+        
+        <h2>5. Personalización</h2>
+        <p>La mayor parte del contenido del sitio se gestiona desde el panel de administración.</p>
+         <ul class="list">
+             <li><strong>Admin Panel:</strong> Inicia sesión en <code>/login</code> para acceder al dashboard. Desde aquí puedes gestionar noticias, el equipo, el slideshow y los ajustes generales del sitio web.</li>
+             <li><strong>Estilos:</strong> Los colores y la apariencia se controlan con variables CSS de Tailwind. Puedes modificar los valores HSL en <code>src/app/globals.css</code> para cambiar el tema.</li>
+             <li><strong>Programación de Shows:</strong> Por ahora, el horario de los programas se gestiona directamente en el archivo <code>src/lib/schedule-data.ts</code>. Puedes editar este archivo para reflejar tu programación.</li>
+        </ul>
+    </div>
+</body>
+</html>
