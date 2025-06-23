@@ -1,40 +1,14 @@
 import Image from "next/image";
 import Player from "@/components/player";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import type { NewsArticle, TeamMember } from "@/types";
+import type { TeamMember } from "@/types";
 import LiveClock from "@/components/live-clock";
-
-const newsArticles: NewsArticle[] = [
-  {
-    id: "1",
-    title: "Nuevo Show de Mañana: 'Amanecer Esmerosound'",
-    excerpt: "Sintoniza cada mañana para empezar tu día con la mejor energía y la música que te gusta.",
-    imageUrl: "https://placehold.co/600x400.png",
-    category: "Novedades",
-    date: "2024-07-28",
-    dataAiHint: "morning radio",
-  },
-  {
-    id: "2",
-    title: "Entrevista Exclusiva con Artista Local",
-    excerpt: "Este viernes, no te pierdas nuestra charla con la revelación musical de la ciudad.",
-    imageUrl: "https://placehold.co/600x400.png",
-    category: "Entrevistas",
-    date: "2024-07-27",
-    dataAiHint: "musician interview",
-  },
-  {
-    id: "3",
-    title: "Top 10: Las canciones más sonadas de la semana",
-    excerpt: "Descubre si tu canción favorita llegó a la cima de nuestro ranking semanal.",
-    imageUrl: "https://placehold.co/600x400.png",
-    category: "Música",
-    date: "2024-07-26",
-    dataAiHint: "music chart",
-  },
-];
+import { newsArticles } from "@/lib/news-data";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 const teamMembers: TeamMember[] = [
   {
@@ -75,7 +49,7 @@ export default function Home() {
         <Player />
       </section>
 
-      <section className="mb-12">
+      <section id="noticias" className="mb-12">
         <h2 className="mb-6 text-3xl font-bold tracking-tight text-center font-headline">
           Últimas Noticias
         </h2>
@@ -83,7 +57,7 @@ export default function Home() {
           {newsArticles.map((article) => (
             <Card
               key={article.id}
-              className="overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl"
+              className="overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl flex flex-col"
             >
               <CardHeader className="p-0">
                 <Image
@@ -95,7 +69,7 @@ export default function Home() {
                   data-ai-hint={article.dataAiHint}
                 />
               </CardHeader>
-              <CardContent className="p-6">
+              <CardContent className="p-6 flex-grow">
                 <Badge variant="secondary" className="mb-2">
                   {article.category}
                 </Badge>
@@ -104,6 +78,14 @@ export default function Home() {
                 </h3>
                 <p className="text-muted-foreground">{article.excerpt}</p>
               </CardContent>
+              <CardFooter className="p-6 pt-0 mt-auto">
+                <Button asChild variant="link" className="p-0 h-auto font-semibold">
+                  <Link href={`/noticias/${article.id}`}>
+                    Ver más
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardFooter>
             </Card>
           ))}
         </div>
