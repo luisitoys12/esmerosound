@@ -70,7 +70,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid gap-8 text-center md:grid-cols-3 md:text-left">
           <div className="flex flex-col items-center md:items-start">
-            <Link href="/" className="flex items-center gap-2 font-bold">
+            <Link href="/inicio" className="flex items-center gap-2 font-bold">
               <Radio className="h-6 w-6 text-primary" />
               <span className="font-headline text-lg">{displaySettings.title}</span>
             </Link>

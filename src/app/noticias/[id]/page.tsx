@@ -19,7 +19,7 @@ export default async function NoticiaPage({ params }: { params: { id: string } }
       <div className="max-w-4xl mx-auto">
         <div className="mb-4">
           <Button asChild variant="ghost">
-            <Link href="/#noticias" className="flex items-center gap-2">
+            <Link href="/inicio#noticias" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Volver a Noticias
             </Link>

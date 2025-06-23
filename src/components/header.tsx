@@ -33,7 +33,7 @@ import {
 import { useTheme } from "next-themes";
 
 const mainNavLinks = [
-  { href: "/", label: "Inicio" },
+  { href: "/inicio", label: "Inicio" },
   { href: "/schedule", label: "Programación" },
   { href: "/podcasts", label: "Podcasts" },
   { href: "/equipo", label: "Equipo", icon: <Users /> },
@@ -119,7 +119,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold">
+        <Link href="/inicio" className="flex items-center gap-2 font-bold">
           <Radio className="h-6 w-6 text-primary" />
           <span className="font-headline text-lg">Esmerosound</span>
         </Link>
@@ -165,7 +165,7 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <div className="flex flex-col h-full">
-                 <Link href="/" className="flex items-center gap-2 font-bold mb-8">
+                 <Link href="/inicio" className="flex items-center gap-2 font-bold mb-8">
                   <Radio className="h-6 w-6 text-primary" />
                   <span className="font-headline text-lg">Esmerosound</span>
                 </Link>
