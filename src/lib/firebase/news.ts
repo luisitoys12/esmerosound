@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/types';
+import { newsArticles as seedData } from '@/lib/news-data';
 
 const newsCollection = collection(db, 'news');
 
@@ -40,9 +41,33 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
   try {
     const q = query(newsCollection, orderBy('createdAt', 'desc'), limit(articleLimit));
     const snapshot = await getDocs(q);
+
     if (snapshot.empty) {
-      return [];
+      // Seed the database with example articles if it's empty
+      console.log("News collection is empty. Seeding with example data...");
+      for (const article of seedData) {
+        const { id, date, createdAt, ...articleData } = article;
+        await addDoc(newsCollection, {
+          ...articleData,
+          date: new Date().toISOString().split('T')[0],
+          createdAt: serverTimestamp(),
+        });
+      }
+      // Re-fetch after seeding
+      const newSnapshot = await getDocs(q);
+      if (newSnapshot.empty) {
+        return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
+      }
+      return newSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toMillis() || new Date().getTime(),
+        } as NewsArticle;
+      });
     }
+
     return snapshot.docs.map(doc => {
       const data = doc.data();
       return {
@@ -52,8 +77,8 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
       } as NewsArticle;
     });
   } catch (error) {
-    console.error("Error getting news articles: ", error);
-    return [];
+    console.error("Error getting news articles, returning seed data. This is likely due to missing Firebase credentials.", error);
+    return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
   }
 }
 
@@ -71,10 +96,18 @@ export async function getNewsArticleById(id: string): Promise<NewsArticle | null
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as NewsArticle;
     } else {
+      const seedArticle = seedData.find(article => article.id === id);
+      if (seedArticle) {
+        return { ...seedArticle, createdAt: new Date().getTime() };
+      }
       return null;
     }
   } catch (error) {
-    console.error("Error getting news article by ID: ", error);
+    console.error("Error getting news article by ID, returning seed data. This is likely due to missing Firebase credentials.", error);
+    const seedArticle = seedData.find(article => article.id === id);
+    if (seedArticle) {
+      return { ...seedArticle, createdAt: new Date().getTime() };
+    }
     return null;
   }
 }

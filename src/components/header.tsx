@@ -11,6 +11,7 @@ import {
   Moon,
   Sun,
   ChevronDown,
+  Clapperboard,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,7 @@ const mainNavLinks = [
 const moreNavLinks = [
   { href: "/events", label: "Eventos" },
   { href: "/requests", label: "Solicitudes" },
+  { href: "/live-video", label: "Video en Vivo", icon: <Clapperboard/> },
   { href: "/contact", label: "Contacto" },
 ];
 
@@ -139,7 +141,7 @@ export default function Header() {
             <DropdownMenuContent>
               {moreNavLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
-                  <Link href={link.href}>{link.label}</Link>
+                  <Link href={link.href}>{link.icon}{link.label}</Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -173,6 +175,7 @@ export default function Header() {
                           href={link.href}
                           className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                         >
+                          {link.icon}
                           {link.label}
                         </Link>
                       </SheetClose>

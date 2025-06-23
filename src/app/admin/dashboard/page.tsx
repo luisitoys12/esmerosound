@@ -3,7 +3,7 @@
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
-import { Settings, Sparkles, Wrench, Globe, Newspaper } from "lucide-react";
+import { Settings, Sparkles, Wrench, Globe, Newspaper, PictureInPicture } from "lucide-react";
 
 const adminFeatures = [
     {
@@ -17,6 +17,12 @@ const adminFeatures = [
         description: "Añade, edita y elimina artículos de noticias de tu sitio web.",
         href: "/admin/news",
         icon: <Newspaper className="h-8 w-8 text-destructive"/>
+    },
+    {
+        title: "Gestionar Slideshow",
+        description: "Añade o edita los banners promocionales de la página de inicio.",
+        href: "/admin/slideshow",
+        icon: <PictureInPicture className="h-8 w-8 text-green-500"/>
     },
     {
         title: "Ajustes de Streaming",

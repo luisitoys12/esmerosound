@@ -26,6 +26,7 @@ import {
   LogOut,
   Globe,
   Newspaper,
+  PictureInPicture,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -84,6 +85,14 @@ export default function AdminLayout({
                 <Link href="/admin/news">
                   <Newspaper />
                   Noticias
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/admin/slideshow">
+                  <PictureInPicture />
+                  Slideshow
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

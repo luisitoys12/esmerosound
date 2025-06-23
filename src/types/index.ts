@@ -46,14 +46,6 @@ export interface RadioEvent {
   dataAiHint: string;
 }
 
-export interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  imageUrl: string;
-  dataAiHint: string;
-}
-
 export interface AzuracastSong {
   id: string;
   text: string;
@@ -85,4 +77,14 @@ export interface Podcast {
   date: string;
   audioUrl: string;
   dataAiHint: string;
+}
+
+export interface Slide {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  linkUrl: string;
+  dataAiHint: string;
+  createdAt?: number;
 }
