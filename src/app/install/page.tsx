@@ -12,7 +12,7 @@ export default function InstallPage() {
         <CardHeader>
           <CardTitle className="font-headline text-3xl flex items-center gap-3">
             <ShieldCheck className="h-8 w-8 text-primary" />
-            Instalación de Esmerosound
+            Instalación y Activación
           </CardTitle>
           <CardDescription>
             Guía de activación y despliegue para tu nueva instancia de la aplicación.
@@ -22,19 +22,25 @@ export default function InstallPage() {
           <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
              <h3 className="font-semibold flex items-center gap-2">
                 <KeyRound className="h-5 w-5 text-accent" />
-                Paso 1: Obtener una Licencia
+                Paso 1: Activar tu Licencia
              </h3>
              <p className="text-sm text-muted-foreground">
-                Esmerosound es un software con licencia. Para utilizarlo en producción, necesitas una clave de licencia válida. Este proyecto tiene código privado y su uso está restringido.
+                Esmerosound es un software con licencia. Para utilizarlo, primero necesitas activar tu copia con una clave de licencia válida.
              </p>
              <p className="text-sm text-muted-foreground">
-                Por favor, contacta a nuestro equipo para solicitar tu licencia. Encontrarás un ejemplo de clave en el archivo <code>licencias.txt</code> de tu proyecto.
+                Encontrarás tu clave de licencia en el archivo <code>licencias.txt</code> de tu proyecto. Introdúcela en la página de activación para desbloquear la aplicación.
              </p>
-             <Button asChild>
-                <a href="mailto:cushmediagroup@gmail.com">
-                    Contactar para obtener licencia
-                </a>
-             </Button>
+             <p className="text-sm text-muted-foreground">
+                Si no tienes una licencia o necesitas ayuda, por favor, contacta a nuestro equipo.
+             </p>
+             <div className="flex flex-wrap gap-2">
+                <Button asChild>
+                    <Link href="/license">Ir a la Página de Activación</Link>
+                </Button>
+                <Button asChild variant="secondary">
+                    <a href="mailto:cushmediagroup@gmail.com">Contactar para obtener licencia</a>
+                </Button>
+             </div>
           </div>
 
           <div className="space-y-4 p-4 border rounded-lg">
@@ -43,7 +49,7 @@ export default function InstallPage() {
                 Paso 2: Despliegue en un Hosting
              </h3>
               <p className="text-sm text-muted-foreground">
-                Esta aplicación está construida con Next.js y requiere un entorno Node.js para funcionar. No es compatible con hostings tradicionales como cPanel o Plesk a menos que ofrezcan soporte específico para Node.js.
+                Una vez activada, puedes desplegar la aplicación. Está construida con Next.js y requiere un entorno Node.js para funcionar. No es compatible con hostings tradicionales como cPanel o Plesk a menos que ofrezcan soporte específico para Node.js.
               </p>
               <p className="text-sm text-muted-foreground">
                 Te recomendamos encarecidamente utilizar una de las plataformas modernas optimizadas para Next.js. Consulta nuestra guía completa para ver las instrucciones detalladas de despliegue.

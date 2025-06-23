@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import CookieBanner from "@/components/cookie-banner";
 import { getSettings } from "@/lib/firebase/settings";
+import { LicenseProvider } from "@/components/license-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -40,13 +41,15 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <div className="relative flex min-h-dvh flex-col bg-background">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-            <Toaster />
-            <CookieBanner />
+            <LicenseProvider>
+              <div className="relative flex min-h-dvh flex-col bg-background">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+              <Toaster />
+              <CookieBanner />
+            </LicenseProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
