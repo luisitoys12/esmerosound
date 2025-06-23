@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import type { TeamMember } from "@/types";
 import { useEffect } from "react";
 
@@ -27,6 +28,7 @@ const formSchema = z.object({
   name: z.string().min(3, "El nombre es muy corto."),
   role: z.string().min(3, "El rol es muy corto."),
   imageUrl: z.string().url("Debe ser una URL válida."),
+  bio: z.string().min(10, "La biografía es muy corta.").optional().or(z.literal('')),
   dataAiHint: z.string().optional(),
   twitterUrl: z.string().url("URL de Twitter no válida.").optional().or(z.literal('')),
   instagramUrl: z.string().url("URL de Instagram no válida.").optional().or(z.literal('')),
@@ -49,6 +51,7 @@ export function TeamForm({ isOpen, onOpenChange, onSubmit, initialData, isSubmit
       name: "",
       role: "",
       imageUrl: "https://placehold.co/400x400.png",
+      bio: "",
       dataAiHint: "",
       twitterUrl: "",
       instagramUrl: "",
@@ -63,6 +66,7 @@ export function TeamForm({ isOpen, onOpenChange, onSubmit, initialData, isSubmit
         name: "",
         role: "",
         imageUrl: "https://placehold.co/400x400.png",
+        bio: "",
         dataAiHint: "",
         twitterUrl: "",
         instagramUrl: "",
@@ -89,6 +93,9 @@ export function TeamForm({ isOpen, onOpenChange, onSubmit, initialData, isSubmit
             )}/>
              <FormField control={form.control} name="imageUrl" render={({ field }) => (
               <FormItem><FormLabel>URL de la Imagen</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+            )}/>
+            <FormField control={form.control} name="bio" render={({ field }) => (
+              <FormItem><FormLabel>Biografía</FormLabel><FormControl><Textarea placeholder="Una breve descripción del miembro del equipo..." {...field} /></FormControl><FormMessage /></FormItem>
             )}/>
             <FormField control={form.control} name="dataAiHint" render={({ field }) => (
               <FormItem><FormLabel>Pista para IA (imágenes)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>

@@ -94,6 +94,7 @@ export interface TeamMember {
   name: string;
   role: string;
   imageUrl: string;
+  bio?: string;
   dataAiHint: string;
   twitterUrl?: string;
   instagramUrl?: string;

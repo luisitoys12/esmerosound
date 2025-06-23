@@ -7,7 +7,7 @@ import type { TeamMember } from "@/types";
 import { getTeamMembers } from "@/lib/firebase/team";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Twitter, Instagram } from "lucide-react";
+import { Twitter, Instagram, Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TeamSection() {
@@ -31,9 +31,16 @@ export default function TeamSection() {
 
   return (
     <section id="equipo" className="mb-12">
-      <h2 className="text-3xl font-bold tracking-tight text-center sm:text-left font-headline mb-6">
-        Nuestro Equipo
-      </h2>
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        <h2 className="text-3xl font-bold tracking-tight text-center sm:text-left font-headline">
+          Nuestro Equipo
+        </h2>
+         <Button asChild variant="outline">
+          <Link href="/equipo">
+            Ver Todo el Equipo <Users className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
@@ -48,19 +55,23 @@ export default function TeamSection() {
         ) : (
           teamMembers.map((member) => (
             <Card key={member.id} className="text-center overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl">
-              <CardHeader className="p-0">
-                <Image
-                  src={member.imageUrl}
-                  alt={member.name}
-                  width={400}
-                  height={400}
-                  className="w-full h-auto object-cover"
-                  data-ai-hint={member.dataAiHint}
-                />
-              </CardHeader>
+              <Link href={`/equipo/${member.id}`} className="block">
+                <CardHeader className="p-0">
+                    <Image
+                    src={member.imageUrl}
+                    alt={member.name}
+                    width={400}
+                    height={400}
+                    className="w-full h-auto object-cover aspect-square"
+                    data-ai-hint={member.dataAiHint}
+                    />
+                </CardHeader>
+              </Link>
               <CardContent className="p-6">
-                <CardTitle className="text-xl font-headline">{member.name}</CardTitle>
-                <CardDescription className="text-primary mt-1">{member.role}</CardDescription>
+                <Link href={`/equipo/${member.id}`}>
+                    <CardTitle className="text-xl font-headline">{member.name}</CardTitle>
+                    <CardDescription className="text-primary mt-1">{member.role}</CardDescription>
+                </Link>
                 <div className="flex justify-center gap-2 mt-4">
                   {member.twitterUrl && (
                     <Button asChild variant="ghost" size="icon">

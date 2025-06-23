@@ -12,6 +12,7 @@ import {
   Sun,
   ChevronDown,
   Clapperboard,
+  Users,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ const mainNavLinks = [
   { href: "/", label: "Inicio" },
   { href: "/schedule", label: "Programación" },
   { href: "/podcasts", label: "Podcasts" },
+  { href: "/equipo", label: "Equipo", icon: <Users /> },
   { href: "/top10", label: "Top 10" },
 ];
 
@@ -141,7 +143,7 @@ export default function Header() {
             <DropdownMenuContent>
               {moreNavLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
-                  <Link href={link.href}>{link.icon}{link.label}</Link>
+                  <Link href={link.href} className="flex items-center gap-2">{link.icon}{link.label}</Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
