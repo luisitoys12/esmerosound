@@ -1,12 +1,24 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PrivacyPage() {
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    setCurrentDate(new Date().toLocaleDateString('es-ES'));
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="font-headline text-3xl">Política de Privacidad</CardTitle>
-          <CardDescription>Última actualización: {new Date().toLocaleDateString('es-ES')}</CardDescription>
+          <CardDescription>
+            {currentDate ? `Última actualización: ${currentDate}` : <Skeleton className="h-5 w-48" />}
+          </CardDescription>
         </CardHeader>
         <CardContent className="prose dark:prose-invert max-w-none">
           <p>Tu privacidad es importante para nosotros. Es política de Esmerosound respetar tu privacidad con respecto a cualquier información que podamos recopilar de ti a través de nuestro sitio web.</p>

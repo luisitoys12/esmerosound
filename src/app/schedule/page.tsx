@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import {
   Tabs,
   TabsContent,
@@ -7,6 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Schedule, Show } from "@/types";
 import { schedule, daysOfWeek } from "@/lib/schedule-data";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ScheduleCard = ({ shows }: { shows: Show[] }) => {
   if (shows.length === 0) {
@@ -36,11 +40,18 @@ const ScheduleCard = ({ shows }: { shows: Show[] }) => {
 };
 
 export default function SchedulePage() {
-  const todayKey = new Date()
-    .toLocaleString("es-ES", { weekday: "long" })
-    .toLowerCase();
-  
-  const today = daysOfWeek.find(d => d.toLowerCase() === todayKey) || "lunes";
+  const [activeTab, setActiveTab] = useState("lunes");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    const todayKey = new Date()
+      .toLocaleString("es-ES", { weekday: "long" })
+      .toLowerCase();
+    
+    const today = daysOfWeek.find(d => d.toLowerCase() === todayKey) || "lunes";
+    setActiveTab(today);
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -51,20 +62,31 @@ export default function SchedulePage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue={today} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-7">
+          {isClient ? (
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-3 sm:grid-cols-7">
+                {daysOfWeek.map((day) => (
+                  <TabsTrigger key={day} value={day} className="capitalize">
+                    {day.substring(0,3)}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
               {daysOfWeek.map((day) => (
-                <TabsTrigger key={day} value={day} className="capitalize">
-                  {day.substring(0,3)}
-                </TabsTrigger>
+                <TabsContent key={day} value={day}>
+                  <ScheduleCard shows={schedule[day as keyof Schedule]} />
+                </TabsContent>
               ))}
-            </TabsList>
-            {daysOfWeek.map((day) => (
-              <TabsContent key={day} value={day}>
-                <ScheduleCard shows={schedule[day as keyof Schedule]} />
-              </TabsContent>
-            ))}
-          </Tabs>
+            </Tabs>
+          ) : (
+             <div className="w-full space-y-4">
+                <Skeleton className="h-10 w-full" />
+                <div className="mt-2 border p-4 rounded-md">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full mt-4" />
+                  <Skeleton className="h-20 w-full mt-4" />
+                </div>
+             </div>
+          )}
         </CardContent>
       </Card>
     </div>
