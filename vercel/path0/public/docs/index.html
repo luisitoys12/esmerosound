@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa - Esmerosound</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            color: #1a202c;
+            line-height: 1.2;
+            scroll-margin-top: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 40px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            margin-top: 25px;
+        }
+        p, li {
+            font-size: 1em;
+            color: #4a5568;
+        }
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        .card {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .warning {
+            background-color: #fffaf0;
+            border-left: 4px solid #f6e05e;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .license-warning {
+            background-color: #fed7d7;
+            border: 2px solid #c53030;
+            color: #c53030;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .license-warning h2 {
+            color: #c53030;
+            margin-top: 0;
+            border: none;
+        }
+        .license-warning p {
+            color: #9b2c2c;
+        }
+        .license-warning a {
+            color: #c53030;
+            font-weight: bold;
+        }
+        .list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .list li {
+            margin-bottom: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: .25em .6em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            color: #fff;
+        }
+        .badge-admin { background-color: #3182ce; }
+        .badge-user { background-color: #38a169; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="license-warning">
+            <h2><span style="color: #c53030;">&#9888;</span> ¡Atención! Software con Licencia</h2>
+            <p><strong>Esmerosound es un proyecto de código privado y requiere una licencia para su uso, modificación o despliegue.</strong></p>
+            <p>Para obtener una licencia válida, por favor contacta a <a href="mailto:cushmediagroup@gmail.com"><strong>cushmediagroup@gmail.com</strong></a>.</p>
+            <p>El uso no autorizado de este software está estrictamente prohibido y puede acarrear consecuencias legales.</p>
+        </div>
+
+        <h1>Guía Completa de Esmerosound</h1>
+        <p>¡Bienvenido a la guía definitiva de Esmerosound! Este documento te ayudará a entender cómo usar, instalar, desplegar y personalizar tu propia instancia del sitio web.</p>
+
+        <!-- ====================================================== -->
+        <!-- GUÍA DE USUARIO -->
+        <!-- ====================================================== -->
+        <h2>Guía de Usuario</h2>
+        <p>Esta sección está dedicada a los usuarios finales del sitio web: oyentes y administradores de contenido.</p>
+
+        <h3><span class="badge badge-user">Para Oyentes</span></h3>
+        <div class="card">
+            <h4 style="margin-top:0;">Funcionalidades Principales</h4>
+            <ul class="list">
+                <li><strong>Reproductor en Vivo:</strong> El reproductor principal te permite escuchar la transmisión en vivo. Puedes controlar el volumen, ver la canción actual y acceder al historial reciente.</li>
+                <li><strong>Programación:</strong> En la sección "Programación", puedes ver el horario de todos nuestros shows para cada día de la semana.</li>
+                <li><strong>Podcasts:</strong> ¿Te perdiste un programa? Encuéntralo en la sección de "Podcasts" y escúchalo cuando quieras.</li>
+                <li><strong>Equipo:</strong> Conoce a nuestros locutores en la sección "Equipo". Haz clic en un miembro para ver su perfil detallado, biografía y redes sociales.</li>
+                <li><strong>Top 10:</strong> Descubre las canciones más populares de la semana y mira sus videoclips.</li>
+                <li><strong>Solicitudes:</strong> ¿Quieres escuchar una canción? Ve a "Solicitudes" y pídenosla.</li>
+            </ul>
+        </div>
+
+        <h3><span class="badge badge-admin">Para Administradores</span></h3>
+        <p>El panel de administración te da control total sobre el contenido del sitio web. Para acceder, inicia sesión con tus credenciales en la página <code>/login</code>.</p>
+        <div class="card">
+            <h4 style="margin-top:0;">Gestión de Contenido</h4>
+            <ul class="list">
+                <li><strong>Dashboard:</strong> Tu centro de operaciones. Desde aquí puedes navegar a todas las secciones de gestión.</li>
+                <li><strong>Generador IA de Shows:</strong> Una herramienta para crear descripciones de programas atractivas usando inteligencia artificial.</li>
+                <li><strong>Gestionar Noticias:</strong> Añade, edita y elimina artículos de noticias.</li>
+                <li><strong>Gestionar Slideshow:</strong> Controla el carrusel de la página de inicio.</li>
+                <li><strong>Gestionar Equipo:</strong> Añade nuevos miembros al equipo y edita sus perfiles.</li>
+                <li><strong>Ajustes de Streaming:</strong> Configura la fuente de tu transmisión.</li>
+                <li><strong>Ajustes Web:</strong> Cambia el título, la descripción y las URLs de redes sociales del sitio web.</li>
+            </ul>
+        </div>
+
+        <!-- ====================================================== -->
+        <!-- GUÍA DE INSTALACIÓN Y DESPLIEGUE -->
+        <!-- ====================================================== -->
+        <h2>Guía de Instalación y Despliegue</h2>
+        <p>Esta sección es para desarrolladores que deseen instalar y desplegar su propia versión de Esmerosound, siempre y cuando cuenten con una licencia válida.</p>
+
+        <h3>1. Requisitos Previos</h3>
+        <ul class="list">
+            <li><strong>Licencia Válida:</strong> Contacta a <a href="mailto:cushmediagroup@gmail.com">cushmediagroup@gmail.com</a> para obtenerla.</li>
+            <li><strong>Node.js:</strong> Versión 20.x o superior.</li>
+            <li><strong>Git:</strong> Para clonar el repositorio.</li>
+            <li><strong>Cuenta de Firebase:</strong> Necesitarás un proyecto de Firebase para la base de datos y la autenticación.</li>
+            <li><strong>Docker (Opcional):</strong> Si deseas usar Docker Compose para el desarrollo local.</li>
+        </ul>
+
+        <h3>2. Configuración de Firebase</h3>
+        <p>Este proyecto utiliza Firebase para la gestión de contenido. Sigue estos pasos:</p>
+        <ol class="list" style="list-style-type: decimal; padding-left: 20px;">
+            <li>Ve a la <a href="https://console.firebase.google.com/" target="_blank">Consola de Firebase</a> y crea un nuevo proyecto.</li>
+            <li>Dentro de tu proyecto, ve a <strong>Authentication</strong> y habilita el proveedor de <strong>Email/Contraseña</strong> y <strong>Google</strong>.</li>
+            <li>Ve a <strong>Firestore Database</strong> y crea una base de datos en modo de producción.</li>
+            <li>Ve a la configuración del proyecto (icono de engranaje) y, en la sección "Tus apps", crea una nueva aplicación web.</li>
+            <li>Copia las credenciales de configuración de Firebase (el objeto <code>firebaseConfig</code>).</li>
+        </ol>
+
+        <div class="warning">
+            <p><strong>¡Importante!</strong> Crea un archivo <code>.env.local</code> en la raíz de tu proyecto para las credenciales.</p>
+        </div>
+        <pre><code>NEXT_PUBLIC_FIREBASE_API_KEY="TU_API_KEY"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="TU_AUTH_DOMAIN"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="TU_PROJECT_ID"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="TU_STORAGE_BUCKET"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="TU_SENDER_ID"
+NEXT_PUBLIC_FIREBASE_APP_ID="TU_APP_ID"</code></pre>
+
+        <h3>3. Instalación Local</h3>
+        <pre><code># 1. Clona el repositorio
+git clone https://github.com/tu-usuario/esmerosound.git
+cd esmerosound
+
+# 2. Crea el archivo .env.local (ver paso anterior)
+
+# 3. Instala las dependencias
+npm install
+
+# 4. Inicia el servidor de desarrollo
+npm run dev</code></pre>
+        <p>La aplicación estará disponible en <code>http://localhost:9002</code>.</p>
+
+        <h3>4. Despliegue</h3>
+
+        <h4>Vercel (Recomendado)</h4>
+        <div class="card">
+            <p>Vercel es la plataforma ideal para desplegar aplicaciones Next.js.</p>
+            <ol class="list" style="list-style-type: decimal; padding-left: 20px;">
+                <li>Haz un fork de este repositorio en tu cuenta de GitHub.</li>
+                <li>Ve a <a href="https://vercel.com/" target="_blank">Vercel</a> e inicia sesión con tu cuenta de GitHub.</li>
+                <li>Crea un nuevo proyecto e importa tu repositorio.</li>
+                <li>Vercel detectará automáticamente que es un proyecto Next.js.</li>
+                <li>Ve a la configuración del proyecto en Vercel (Settings -> Environment Variables) y añade las mismas variables de tu archivo <code>.env.local</code>.</li>
+                <li>¡Listo! Vercel desplegará tu sitio automáticamente.</li>
+            </ol>
+        </div>
+
+        <h4>Docker Compose (Linux)</h4>
+        <div class="card">
+            <p>Si prefieres usar Docker, el repositorio incluye un <code>Dockerfile</code> y un <code>docker-compose.yml</code>.</p>
+             <ol class="list" style="list-style-type: decimal; padding-left: 20px;">
+                <li>Asegúrate de tener Docker y Docker Compose instalados.</li>
+                <li>Crea tu archivo <code>.env.local</code> como se describe arriba.</li>
+                <li>Ejecuta el siguiente comando para construir y levantar el contenedor:</li>
+            </ol>
+            <pre><code>docker-compose up -d --build</code></pre>
+            <p>La aplicación estará disponible en <code>http://localhost</code> (puerto 80) y <code>https://localhost</code> (puerto 443).</p>
+        </div>
+        
+        <div class="warning">
+             <p><strong>Nota sobre Hosting Tradicional (cPanel/Plesk):</strong> Este proyecto es una aplicación Next.js, no un sitio web estático tradicional. Desplegarlo en cPanel o Plesk es complejo y no se recomienda, ya que estos entornos no están optimizados para ejecutar aplicaciones Node.js. Para una experiencia sin problemas, utiliza las plataformas recomendadas: Vercel, Netlify o Docker.</p>
+        </div>
+
+        <h3>5. Personalización</h3>
+         <ul class="list">
+             <li><strong>Contenido:</strong> La mayor parte del contenido (noticias, equipo, slideshow, ajustes) se gestiona desde el panel de administración en <code>/login</code>.</li>
+             <li><strong>Estilos:</strong> Los colores y la apariencia se controlan en <code>src/app/globals.css</code>. Modifica las variables CSS para cambiar el tema.</li>
+             <li><strong>Programación:</strong> El horario de los programas se gestiona directamente en el archivo <code>src/lib/schedule-data.ts</code>.</li>
+        </ul>
+    </div>
+</body>
+</html>
