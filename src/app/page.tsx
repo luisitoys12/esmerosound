@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { NewsArticle, TeamMember } from "@/types";
+import LiveClock from "@/components/live-clock";
 
 const newsArticles: NewsArticle[] = [
   {
@@ -69,6 +70,7 @@ const teamMembers: TeamMember[] = [
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
+      <LiveClock />
       <section className="mb-12">
         <Player />
       </section>
