@@ -13,20 +13,17 @@ import {
   orderBy,
   limit,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 import type { Slide } from '@/types';
 import { slides as seedData } from '@/lib/slideshow-data';
-
-const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-
-const slideshowCollection = collection(db, 'slideshow');
 
 export type SlideData = Omit<Slide, 'id' | 'createdAt'>;
 
 export async function addSlide(slideData: SlideData) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot add slide.");
   }
+  const slideshowCollection = collection(db, 'slideshow');
   try {
     const docRef = await addDoc(slideshowCollection, {
       ...slideData,
@@ -42,11 +39,12 @@ export async function addSlide(slideData: SlideData) {
 export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
   const getSeedData = () => seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
 
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     console.warn("Firebase config is missing, returning seed slideshow data.");
     return getSeedData();
   }
 
+  const slideshowCollection = collection(db, 'slideshow');
   try {
     const q = query(slideshowCollection, orderBy('createdAt', 'desc'), limit(slideLimit));
     const snapshot = await getDocs(q);
@@ -76,12 +74,13 @@ export async function getSlideById(id: string): Promise<Slide | null> {
     return seedSlide ? { ...seedSlide, createdAt: new Date().getTime() } : null;
   }
 
-   if (!isFirebaseConfigured) {
+   if (!isFirebaseConfigured || !db) {
     console.warn("Firebase config is missing, returning seed slide data for ID:", id);
     return getSeedSlide();
   }
+  const slideshowCollection = collection(db, 'slideshow');
   try {
-    const docRef = doc(db, 'slideshow', id);
+    const docRef = doc(slideshowCollection, id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -101,11 +100,12 @@ export async function getSlideById(id: string): Promise<Slide | null> {
 }
 
 export async function updateSlide(id: string, slideData: Partial<SlideData>) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot update slide.");
   }
+  const slideshowCollection = collection(db, 'slideshow');
   try {
-    const docRef = doc(db, 'slideshow', id);
+    const docRef = doc(slideshowCollection, id);
     await updateDoc(docRef, slideData);
   } catch (error) {
     console.error("Error updating slide: ", error);
@@ -114,11 +114,12 @@ export async function updateSlide(id: string, slideData: Partial<SlideData>) {
 }
 
 export async function deleteSlide(id: string) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot delete slide.");
   }
+  const slideshowCollection = collection(db, 'slideshow');
   try {
-    const docRef = doc(db, 'slideshow', id);
+    const docRef = doc(slideshowCollection, id);
     await deleteDoc(docRef);
   } catch (error) {
     console.error("Error deleting slide: ", error);

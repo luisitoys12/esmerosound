@@ -13,20 +13,17 @@ import {
   orderBy,
   limit,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 import type { TeamMember } from '@/types';
 import { teamMembers as seedData } from '@/lib/team-data';
-
-const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-
-const teamCollection = collection(db, 'team');
 
 export type TeamMemberData = Omit<TeamMember, 'id' | 'createdAt'>;
 
 export async function addTeamMember(memberData: TeamMemberData) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot add team member.");
   }
+  const teamCollection = collection(db, 'team');
   try {
     const docRef = await addDoc(teamCollection, {
       ...memberData,
@@ -42,11 +39,12 @@ export async function addTeamMember(memberData: TeamMemberData) {
 export async function getTeamMembers(memberLimit: number = 20): Promise<TeamMember[]> {
   const getSeedData = () => seedData.map(member => ({ ...member, createdAt: new Date().getTime() })).slice(0, memberLimit);
 
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     console.warn("Firebase config is missing, returning seed team data.");
     return getSeedData();
   }
   
+  const teamCollection = collection(db, 'team');
   try {
     const q = query(teamCollection, orderBy('createdAt', 'desc'), limit(memberLimit));
     const snapshot = await getDocs(q);
@@ -76,13 +74,14 @@ export async function getTeamMemberById(id: string): Promise<TeamMember | null> 
     return seedMember ? { ...seedMember, createdAt: new Date().getTime() } : null;
   }
 
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     console.warn("Firebase config is missing, returning seed team member data for ID:", id);
     return getSeedMember();
   }
 
+  const teamCollection = collection(db, 'team');
   try {
-    const docRef = doc(db, 'team', id);
+    const docRef = doc(teamCollection, id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -93,7 +92,6 @@ export async function getTeamMemberById(id: string): Promise<TeamMember | null> 
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as TeamMember;
     } else {
-      // If not in Firebase, check seed data.
       return getSeedMember();
     }
   } catch (error) {
@@ -103,11 +101,12 @@ export async function getTeamMemberById(id: string): Promise<TeamMember | null> 
 }
 
 export async function updateTeamMember(id: string, memberData: Partial<TeamMemberData>) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot update team member.");
   }
+  const teamCollection = collection(db, 'team');
   try {
-    const docRef = doc(db, 'team', id);
+    const docRef = doc(teamCollection, id);
     await updateDoc(docRef, memberData);
   } catch (error) {
     console.error("Error updating team member: ", error);
@@ -116,11 +115,12 @@ export async function updateTeamMember(id: string, memberData: Partial<TeamMembe
 }
 
 export async function deleteTeamMember(id: string) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot delete team member.");
   }
+  const teamCollection = collection(db, 'team');
   try {
-    const docRef = doc(db, 'team', id);
+    const docRef = doc(teamCollection, id);
     await deleteDoc(docRef);
   } catch (error) {
     console.error("Error deleting team member: ", error);

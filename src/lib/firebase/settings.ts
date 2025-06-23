@@ -5,12 +5,8 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 import type { SiteSettings } from '@/types';
-
-const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-
-const settingsDocRef = doc(db, 'config', 'main');
 
 const defaultSettings: SiteSettings = {
   title: "Esmerosound",
@@ -23,19 +19,18 @@ const defaultSettings: SiteSettings = {
 
 // Get site settings
 export async function getSettings(): Promise<SiteSettings> {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     console.warn("Firebase config is missing, returning default settings.");
     return defaultSettings;
   }
   
+  const settingsDocRef = doc(db, 'config', 'main');
   try {
     const docSnap = await getDoc(settingsDocRef);
 
     if (docSnap.exists()) {
-      return docSnap.data() as SiteSettings;
+      return { ...defaultSettings, ...docSnap.data() } as SiteSettings;
     } else {
-      // Document doesn't exist, just return defaults. Don't try to write.
-      // The admin panel can create it on first save via updateSettings.
       console.log("Settings document does not exist. Returning default settings.");
       return defaultSettings;
     }
@@ -47,12 +42,11 @@ export async function getSettings(): Promise<SiteSettings> {
 
 // Update site settings
 export async function updateSettings(settingsData: Partial<SiteSettings>) {
-  if (!isFirebaseConfigured) {
+  if (!isFirebaseConfigured || !db) {
     throw new Error("Firebase is not configured. Cannot update settings.");
   }
+  const settingsDocRef = doc(db, 'config', 'main');
   try {
-    // Using set with merge:true will create the document if it doesn't exist,
-    // and update it if it does.
     await setDoc(settingsDocRef, settingsData, { merge: true });
   } catch (error) {
     console.error("Error updating settings: ", error);
