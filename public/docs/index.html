@@ -82,13 +82,6 @@
             margin-top: 20px;
             border-radius: 4px;
         }
-         .danger {
-            background-color: #fff5f5;
-            border-left: 4px solid #e53e3e;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 4px;
-        }
         .list {
             list-style-type: disc;
             padding-left: 20px;
@@ -118,19 +111,46 @@
         <p>¡Bienvenido a la guía definitiva de Esmerosound! Este documento te ayudará a entender cómo usar, instalar, desplegar y personalizar tu propia instancia del sitio web.</p>
 
         <!-- ====================================================== -->
+        <!-- GUÍA DE USUARIO -->
+        <!-- ====================================================== -->
+        <h2>Guía de Usuario</h2>
+        <p>Esta sección está dedicada a los usuarios finales del sitio web: oyentes y administradores de contenido.</p>
+        
+        <h3><span class="badge badge-user">Para Oyentes</span></h3>
+        <div class="card">
+            <h4 style="margin-top:0;">Funcionalidades Principales</h4>
+            <ul class="list">
+                <li><strong>Reproductor en Vivo:</strong> El reproductor principal te permite escuchar la transmisión en vivo. Puedes controlar el volumen, ver la canción actual y acceder al historial reciente.</li>
+                <li><strong>Programación:</strong> En la sección "Programación", puedes ver el horario de todos nuestros shows para cada día de la semana.</li>
+                <li><strong>Podcasts:</strong> ¿Te perdiste un programa? Encuéntralo en la sección de "Podcasts" y escúchalo cuando quieras.</li>
+                <li><strong>Equipo:</strong> Conoce a nuestros locutores en la sección "Equipo". Haz clic en un miembro para ver su perfil detallado, biografía y redes sociales.</li>
+                <li><strong>Top 10:</strong> Descubre las canciones más populares de la semana y mira sus videoclips.</li>
+                <li><strong>Solicitudes:</strong> ¿Quieres escuchar una canción? Ve a "Solicitudes" y pídenosla.</li>
+            </ul>
+        </div>
+
+        <h3><span class="badge badge-admin">Para Administradores</span></h3>
+        <p>El panel de administración te da control total sobre el contenido del sitio web. Para acceder, inicia sesión con tus credenciales en la página <code>/login</code>.</p>
+        <div class="card">
+            <h4 style="margin-top:0;">Gestión de Contenido</h4>
+            <ul class="list">
+                <li><strong>Dashboard:</strong> Tu centro de operaciones. Desde aquí puedes navegar a todas las secciones de gestión.</li>
+                <li><strong>Generador IA de Shows:</strong> Una herramienta para crear descripciones de programas atractivas usando inteligencia artificial.</li>
+                <li><strong>Gestionar Noticias:</strong> Añade, edita y elimina artículos de noticias.</li>
+                <li><strong>Gestionar Slideshow:</strong> Controla el carrusel de la página de inicio.</li>
+                <li><strong>Gestionar Equipo:</strong> Añade nuevos miembros al equipo y edita sus perfiles.</li>
+                <li><strong>Ajustes de Streaming:</strong> Configura la fuente de tu transmisión.</li>
+                <li><strong>Ajustes Web:</strong> Cambia el título, la descripción y las URLs de redes sociales del sitio web.</li>
+            </ul>
+        </div>
+
+        <!-- ====================================================== -->
         <!-- GUÍA DE INSTALACIÓN Y DESPLIEGUE -->
         <!-- ====================================================== -->
         <h2>Guía de Instalación y Despliegue</h2>
         <p>Esta sección es para desarrolladores que deseen instalar y desplegar su propia versión de Esmerosound.</p>
 
-        <h3>1. Licenciamiento</h3>
-        <div class="warning">
-            <p><strong>¡Importante!</strong> Esmerosound es software de código privado y requiere una licencia para su uso en producción. El despliegue sin una licencia válida está prohibido.</p>
-        </div>
-        <p>Para obtener una clave de licencia, por favor contacta al equipo de desarrollo en <strong>cushmediagroup@gmail.com</strong>. En el repositorio encontrarás un archivo <code>licencias.txt</code> con una clave de ejemplo.</p>
-
-
-        <h3>2. Requisitos Previos</h3>
+        <h3>1. Requisitos Previos</h3>
         <ul class="list">
             <li><strong>Node.js:</strong> Versión 20.x o superior.</li>
             <li><strong>Git:</strong> Para clonar el repositorio.</li>
@@ -138,7 +158,7 @@
             <li><strong>Docker (Opcional):</strong> Si deseas usar Docker Compose para el desarrollo local.</li>
         </ul>
 
-        <h3>3. Configuración de Firebase</h3>
+        <h3>2. Configuración de Firebase</h3>
         <p>Este proyecto utiliza Firebase para la gestión de contenido. Sigue estos pasos:</p>
         <ol class="list" style="list-style-type: decimal; padding-left: 20px;">
             <li>Ve a la <a href="https://console.firebase.google.com/" target="_blank">Consola de Firebase</a> y crea un nuevo proyecto.</li>
@@ -158,7 +178,7 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="TU_STORAGE_BUCKET"
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="TU_SENDER_ID"
 NEXT_PUBLIC_FIREBASE_APP_ID="TU_APP_ID"</code></pre>
 
-        <h3>4. Instalación Local</h3>
+        <h3>3. Instalación Local</h3>
         <pre><code># 1. Clona el repositorio
 git clone https://github.com/tu-usuario/esmerosound.git
 cd esmerosound
@@ -175,7 +195,7 @@ npm install
 npm run dev</code></pre>
         <p>La aplicación estará disponible en <code>http://localhost:9002</code>.</p>
         
-        <h3>5. Despliegue</h3>
+        <h3>4. Despliegue</h3>
         
         <h4>Vercel (Recomendado)</h4>
         <div class="card">
@@ -209,64 +229,19 @@ npm run dev</code></pre>
                 <li>Ejecuta el siguiente comando para construir y levantar el contenedor:</li>
             </ol>
             <pre><code>docker-compose up -d --build</code></pre>
-            <p>La aplicación estará disponible en los puertos 80 y 443 de tu máquina local.</p>
-        </div>
-
-         <h4>Hosting en cPanel/Plesk (No Recomendado)</h4>
-        <div class="danger">
-            <p><strong>Advertencia:</strong> Desplegar una aplicación Next.js en un hosting compartido tradicional como cPanel o Plesk es complicado y no se recomienda.</p>
-            <ul class="list">
-                <li>Estas plataformas están optimizadas para PHP y sitios estáticos.</li>
-                <li>Next.js requiere un entorno de servidor <strong>Node.js</strong> para funcionar, algo que la mayoría de los planes de hosting compartido no ofrecen por defecto.</li>
-                <li>Si tu proveedor de cPanel/Plesk ofrece una opción de "Setup Node.js App", podrías seguir sus instrucciones específicas, pero a menudo es un proceso frágil y con limitaciones.</li>
-                <li><strong>Para una experiencia óptima y sin complicaciones, utiliza Vercel, Netlify o un despliegue con Docker.</strong></li>
-            </ul>
+            <p>La aplicación estará disponible en <code>http://localhost:9002</code>.</p>
         </div>
         
         <div class="warning">
             <p><strong>Nota sobre GitHub Pages:</strong> Aunque el repositorio incluye un workflow para GitHub Pages, no es la plataforma recomendada. Este sitio utiliza funciones de servidor de Next.js para cargar contenido dinámico, las cuales no funcionan en un entorno estático como GitHub Pages. Para una experiencia completa, utiliza Vercel, Netlify o un despliegue con Docker.</p>
         </div>
 
-        <h3>6. Personalización</h3>
+        <h3>5. Personalización</h3>
          <ul class="list">
              <li><strong>Contenido:</strong> La mayor parte del contenido (noticias, equipo, slideshow, ajustes) se gestiona desde el panel de administración en <code>/login</code>.</li>
              <li><strong>Estilos:</strong> Los colores y la apariencia se controlan en <code>src/app/globals.css</code>. Modifica las variables CSS para cambiar el tema.</li>
              <li><strong>Programación:</strong> El horario de los programas se gestiona directamente en el archivo <code>src/lib/schedule-data.ts</code>.</li>
         </ul>
-
-         <!-- ====================================================== -->
-        <!-- GUÍA DE USUARIO -->
-        <!-- ====================================================== -->
-        <h2>Guía de Usuario</h2>
-        <p>Esta sección está dedicada a los usuarios finales del sitio web: oyentes y administradores de contenido.</p>
-        
-        <h3><span class="badge badge-user">Para Oyentes</span></h3>
-        <div class="card">
-            <h4 style="margin-top:0;">Funcionalidades Principales</h4>
-            <ul class="list">
-                <li><strong>Reproductor en Vivo:</strong> El reproductor principal te permite escuchar la transmisión en vivo. Puedes controlar el volumen, ver la canción actual y acceder al historial reciente.</li>
-                <li><strong>Programación:</strong> En la sección "Programación", puedes ver el horario de todos nuestros shows para cada día de la semana.</li>
-                <li><strong>Podcasts:</strong> ¿Te perdiste un programa? Encuéntralo en la sección de "Podcasts" y escúchalo cuando quieras.</li>
-                <li><strong>Equipo:</strong> Conoce a nuestros locutores en la sección "Equipo". Haz clic en un miembro para ver su perfil detallado, biografía y redes sociales.</li>
-                <li><strong>Top 10:</strong> Descubre las canciones más populares de la semana y mira sus videoclips.</li>
-                <li><strong>Solicitudes:</strong> ¿Quieres escuchar una canción? Ve a "Solicitudes" y pídenosla.</li>
-            </ul>
-        </div>
-
-        <h3><span class="badge badge-admin">Para Administradores</span></h3>
-        <p>El panel de administración te da control total sobre el contenido del sitio web. Para acceder, inicia sesión con tus credenciales en la página <code>/login</code>.</p>
-        <div class="card">
-            <h4 style="margin-top:0;">Gestión de Contenido</h4>
-            <ul class="list">
-                <li><strong>Dashboard:</strong> Tu centro de operaciones. Desde aquí puedes navegar a todas las secciones de gestión.</li>
-                <li><strong>Generador IA de Shows:</strong> Una herramienta para crear descripciones de programas atractivas usando inteligencia artificial.</li>
-                <li><strong>Gestionar Noticias:</strong> Añade, edita y elimina artículos de noticias.</li>
-                <li><strong>Gestionar Slideshow:</strong> Controla el carrusel de la página de inicio.</li>
-                <li><strong>Gestionar Equipo:</strong> Añade nuevos miembros al equipo y edita sus perfiles.</li>
-                <li><strong>Ajustes de Streaming:</strong> Configura la fuente de tu transmisión.</li>
-                <li><strong>Ajustes Web:</strong> Cambia el título, la descripción y las URLs de redes sociales del sitio web.</li>
-            </ul>
-        </div>
     </div>
 </body>
 </html>
