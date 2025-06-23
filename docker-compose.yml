@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "9002:3000"
+      - "9002:9002"
     # Create a .env.local file in the root directory
     # with your Firebase credentials before running docker-compose
     env_file:
