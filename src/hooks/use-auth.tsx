@@ -15,7 +15,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth, isFirebaseConfigured } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
 interface AuthContextType {
@@ -34,11 +34,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!auth) {
+    if (!isFirebaseConfigured) {
       setLoading(false);
       return;
     }
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth!, (user) => {
       setUser(user);
       setLoading(false);
     });
@@ -47,18 +47,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const logInWithEmail = (email: string, pass: string) => {
-    if (!auth) return Promise.reject(new Error("Firebase not configured"));
+    if (!isFirebaseConfigured || !auth) {
+      return Promise.reject(new Error("Firebase not configured"));
+    }
     return signInWithEmailAndPassword(auth, email, pass);
   };
 
   const signInWithGoogle = () => {
-    if (!auth) return Promise.reject(new Error("Firebase not configured"));
+    if (!isFirebaseConfigured || !auth) {
+      return Promise.reject(new Error("Firebase not configured"));
+    }
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
   };
 
   const logOut = async () => {
-    if (auth) {
+    if (isFirebaseConfigured && auth) {
         await signOut(auth);
     }
     router.push("/login");
@@ -74,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
