@@ -109,7 +109,7 @@ export default function SlideshowAdminPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="font-headline text-2xl">Gestionar Slideshow</CardTitle>
+            <CardTitle>Gestionar Slideshow</CardTitle>
             <CardDescription>Añade, edita o elimina los banners de la página principal.</CardDescription>
           </div>
           <Button onClick={handleAddClick}>

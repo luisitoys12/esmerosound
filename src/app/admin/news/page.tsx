@@ -109,7 +109,7 @@ export default function NewsAdminPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="font-headline text-2xl">Gestionar Noticias</CardTitle>
+            <CardTitle>Gestionar Noticias</CardTitle>
             <CardDescription>Añade, edita o elimina artículos de noticias de tu sitio web.</CardDescription>
           </div>
           <Button onClick={handleAddClick}>

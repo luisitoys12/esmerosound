@@ -185,7 +185,6 @@ export default function Player() {
             height={400}
             className="object-cover w-full h-full"
             data-ai-hint="radio album"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         </div>
