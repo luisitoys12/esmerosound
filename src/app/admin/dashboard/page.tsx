@@ -3,7 +3,7 @@
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
-import { Settings, Sparkles, Wrench, Globe, Newspaper, PictureInPicture } from "lucide-react";
+import { Settings, Sparkles, Wrench, Globe, Newspaper, PictureInPicture, Users } from "lucide-react";
 
 const adminFeatures = [
     {
@@ -23,6 +23,12 @@ const adminFeatures = [
         description: "Añade o edita los banners promocionales de la página de inicio.",
         href: "/admin/slideshow",
         icon: <PictureInPicture className="h-8 w-8 text-green-500"/>
+    },
+    {
+        title: "Gestionar Equipo",
+        description: "Añade o edita los miembros del equipo que aparecen en tu sitio.",
+        href: "/admin/team",
+        icon: <Users className="h-8 w-8 text-blue-500"/>
     },
     {
         title: "Ajustes de Streaming",
@@ -57,7 +63,7 @@ export default function DashboardPage() {
       </p>
 
       <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
-        {adminFeatures.map((feature) => (
+        {adminFeatures.sort((a, b) => a.title.localeCompare(b.title)).map((feature) => (
              <Card key={feature.href} className="hover:shadow-lg transition-shadow">
                 <Link href={feature.href} className="block h-full">
                     <CardHeader className="flex flex-row items-center gap-4 space-y-0">

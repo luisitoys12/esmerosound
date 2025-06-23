@@ -97,4 +97,5 @@ export interface TeamMember {
   dataAiHint: string;
   twitterUrl?: string;
   instagramUrl?: string;
+  createdAt?: number;
 }
