@@ -11,6 +11,7 @@ import {
   Radio,
   History,
   RefreshCw,
+  Download,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import type { AzuracastNowPlaying } from "@/types";
+import type { AzuracastNowPlaying, Schedule, Show } from "@/types";
+import { schedule, daysOfWeek } from "@/lib/schedule-data";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -30,6 +32,74 @@ export default function Player() {
   const [metadata, setMetadata] = useState<AzuracastNowPlaying | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const [currentShow, setCurrentShow] = useState<string>("Música sin interrupciones");
+  const [nextShow, setNextShow] = useState<string>("Cargando...");
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    installPrompt.userChoice.then((choiceResult: { outcome: string }) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setInstallPrompt(null);
+    });
+  };
+
+  useEffect(() => {
+    const updateShowInfo = () => {
+      const now = new Date();
+      const dayIndex = now.getDay();
+      const dayName = daysOfWeek[dayIndex] as keyof Schedule;
+      const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const showsForToday = schedule[dayName] || [];
+      let currentS: Show | null = null;
+      let nextS: Show | null = null;
+
+      for (let i = 0; i < showsForToday.length; i++) {
+        const show = showsForToday[i];
+        const [startTime, endTime] = show.time.split(" - ");
+        
+        if (currentTime >= startTime && currentTime < endTime) {
+          currentS = show;
+          if (i + 1 < showsForToday.length) {
+            nextS = showsForToday[i + 1];
+          } else {
+            const nextDayIndex = (dayIndex + 1) % 7;
+            const nextDayName = daysOfWeek[nextDayIndex] as keyof Schedule;
+            nextS = schedule[nextDayName][0];
+          }
+          break;
+        }
+      }
+
+      setCurrentShow(currentS ? currentS.name : "Música sin interrupciones");
+      if (nextS) {
+        const [nextStartTime] = nextS.time.split(" - ");
+        setNextShow(`${nextStartTime} - ${nextS.name}`);
+      } else {
+        setNextShow("Programación no disponible");
+      }
+    };
+
+    updateShowInfo();
+    const interval = setInterval(updateShowInfo, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchMetadata = useCallback(async () => {
     setIsRefreshing(true);
@@ -197,11 +267,25 @@ export default function Player() {
                   />
                   <span className="sr-only">Refrescar</span>
                 </Button>
+                {installPrompt && (
+                  <Button variant="ghost" size="icon" onClick={handleInstallClick}>
+                    <Download className="h-5 w-5" />
+                    <span className="sr-only">Instalar App</span>
+                  </Button>
+                )}
                 <Button variant="ghost" size="icon">
                   <Maximize2 className="h-5 w-5" />
                 </Button>
               </div>
             </div>
+            
+            <div className="my-4">
+              <p className="text-xs uppercase tracking-wider text-primary font-semibold">AHORA</p>
+              <p className="text-base font-medium truncate">{currentShow}</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground mt-2">SIGUE</p>
+              <p className="text-sm text-muted-foreground truncate">{nextShow}</p>
+            </div>
+
             <h2 className="text-3xl font-bold font-headline tracking-tight">
               {songTitle}
             </h2>

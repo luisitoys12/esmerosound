@@ -6,61 +6,7 @@ import {
 } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Schedule, Show } from "@/types";
-
-const schedule: Schedule = {
-  lunes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
-    { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
-    { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
-    { time: "15:00 - 18:00", name: "Tarde de Pop", host: "Popstar" },
-  ],
-  martes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
-    { time: "09:00 - 12:00", name: "Jazz y Más", host: "Blue Note" },
-    { time: "12:00 - 15:00", name: "Hits Actuales", host: "DJ Fresh" },
-    { time: "15:00 - 18:00", name: "Electrónica Global", host: "Beatmaster" },
-  ],
-  miercoles: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
-    { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
-    { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
-    { time: "15:00 - 18:00", name: "Tarde de Pop", host: "Popstar" },
-  ],
-  jueves: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
-    { time: "09:00 - 12:00", name: "Jazz y Más", host: "Blue Note" },
-    { time: "12:00 - 15:00", name: "Hits Actuales", host: "DJ Fresh" },
-    { time: "15:00 - 18:00", name: "Electrónica Global", host: "Beatmaster" },
-  ],
-  viernes: [
-    { time: "06:00 - 09:00", name: "Amanecer Esmerosound", host: "DJ Sol" },
-    { time: "09:00 - 12:00", name: "Ritmos Latinos", host: "DJ Sabor" },
-    { time: "12:00 - 15:00", name: "Clásicos del Rock", host: "Rocker" },
-    { time: "15:00 - 20:00", name: "Viernes de Fiesta", host: "Party Mix" },
-  ],
-  sabado: [
-    { time: "08:00 - 11:00", name: "Fin de Semana Relax", host: "DJ Chill" },
-    { time: "11:00 - 14:00", name: "Top 40", host: "DJ Hits" },
-    { time: "14:00 - 17:00", name: "Recuerdos de Oro", host: "Golden" },
-    { time: "17:00 - 20:00", name: "Sábado Noche", host: "DJ Dance" },
-  ],
-  domingo: [
-    { time: "08:00 - 11:00", name: "Domingo Clásico", host: "Maestro" },
-    { time: "11:00 - 14:00", name: "Especiales Esmerosound", host: "Varios" },
-    { time: "14:00 - 17:00", name: "Mundo Reggae", host: "DJ Roots" },
-    { time: "17:00 - 20:00", name: "Cierre de Semana", host: "DJ Sunset" },
-  ],
-};
-
-const daysOfWeek = [
-  "lunes",
-  "martes",
-  "miercoles",
-  "jueves",
-  "viernes",
-  "sabado",
-  "domingo",
-];
+import { schedule, daysOfWeek } from "@/lib/schedule-data";
 
 const ScheduleCard = ({ shows }: { shows: Show[] }) => {
   if (shows.length === 0) {
@@ -90,10 +36,11 @@ const ScheduleCard = ({ shows }: { shows: Show[] }) => {
 };
 
 export default function SchedulePage() {
-  const today = new Date()
+  const todayKey = new Date()
     .toLocaleString("es-ES", { weekday: "long" })
     .toLowerCase();
-  const defaultTab = daysOfWeek.includes(today) ? today : "lunes";
+  
+  const today = daysOfWeek.find(d => d.toLowerCase() === todayKey) || "lunes";
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -104,11 +51,11 @@ export default function SchedulePage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue={defaultTab} className="w-full">
+          <Tabs defaultValue={today} className="w-full">
             <TabsList className="grid w-full grid-cols-3 sm:grid-cols-7">
               {daysOfWeek.map((day) => (
                 <TabsTrigger key={day} value={day} className="capitalize">
-                  {day}
+                  {day.substring(0,3)}
                 </TabsTrigger>
               ))}
             </TabsList>
