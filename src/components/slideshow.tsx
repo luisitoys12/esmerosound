@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,6 +19,7 @@ import Autoplay from "embla-carousel-autoplay"
 export default function Slideshow() {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const autoplay = useRef(Autoplay({ delay: 5000 }));
 
   useEffect(() => {
     const fetchSlides = async () => {
@@ -42,9 +43,7 @@ export default function Slideshow() {
     <Carousel 
       className="w-full"
       plugins={[
-        Autoplay({
-          delay: 5000,
-        }),
+        autoplay.current
       ]}
       opts={{
         loop: true,
