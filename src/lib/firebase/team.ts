@@ -23,7 +23,6 @@ const teamCollection = collection(db, 'team');
 
 export type TeamMemberData = Omit<TeamMember, 'id' | 'createdAt'>;
 
-// Add a new team member
 export async function addTeamMember(memberData: TeamMemberData) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot add team member.");
@@ -40,12 +39,14 @@ export async function addTeamMember(memberData: TeamMemberData) {
   }
 }
 
-// Get all team members, sorted by creation date
 export async function getTeamMembers(memberLimit: number = 20): Promise<TeamMember[]> {
+  const getSeedData = () => seedData.map(member => ({ ...member, createdAt: new Date().getTime() })).slice(0, memberLimit);
+
   if (!isFirebaseConfigured) {
     console.warn("Firebase config is missing, returning seed team data.");
-    return seedData.map(member => ({ ...member, createdAt: new Date().getTime() })).slice(0, memberLimit);
+    return getSeedData();
   }
+  
   try {
     const q = query(teamCollection, orderBy('createdAt', 'desc'), limit(memberLimit));
     const snapshot = await getDocs(q);
@@ -59,18 +60,7 @@ export async function getTeamMembers(memberLimit: number = 20): Promise<TeamMemb
           createdAt: serverTimestamp(),
         });
       }
-      const newSnapshot = await getDocs(q);
-      if (newSnapshot.empty) {
-        return seedData.map(member => ({ ...member, createdAt: new Date().getTime() })).slice(0, memberLimit);
-      }
-      return newSnapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toMillis() || new Date().getTime(),
-        } as TeamMember;
-      });
+      return getSeedData();
     }
 
     return snapshot.docs.map(doc => {
@@ -83,17 +73,21 @@ export async function getTeamMembers(memberLimit: number = 20): Promise<TeamMemb
     });
   } catch (error) {
     console.error("Error getting team members, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
-    return seedData.map(member => ({ ...member, createdAt: new Date().getTime() })).slice(0, memberLimit);
+    return getSeedData();
   }
 }
 
-// Get a single team member by ID
 export async function getTeamMemberById(id: string): Promise<TeamMember | null> {
-  if (!isFirebaseConfigured) {
-    console.warn("Firebase config is missing, returning seed team member data for ID:", id);
+  const getSeedMember = () => {
     const seedMember = seedData.find(member => member.id === id);
     return seedMember ? { ...seedMember, createdAt: new Date().getTime() } : null;
   }
+
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning seed team member data for ID:", id);
+    return getSeedMember();
+  }
+
   try {
     const docRef = doc(db, 'team', id);
     const docSnap = await getDoc(docRef);
@@ -106,23 +100,14 @@ export async function getTeamMemberById(id: string): Promise<TeamMember | null> 
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as TeamMember;
     } else {
-      const seedMember = seedData.find(member => member.id === id);
-      if (seedMember) {
-        return { ...seedMember, createdAt: new Date().getTime() };
-      }
-      return null;
+      return getSeedMember();
     }
   } catch (error) {
     console.error("Error getting team member by ID, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
-    const seedMember = seedData.find(member => member.id === id);
-    if (seedMember) {
-      return { ...seedMember, createdAt: new Date().getTime() };
-    }
-    return null;
+    return getSeedMember();
   }
 }
 
-// Update a team member
 export async function updateTeamMember(id: string, memberData: Partial<TeamMemberData>) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot update team member.");
@@ -136,7 +121,6 @@ export async function updateTeamMember(id: string, memberData: Partial<TeamMembe
   }
 }
 
-// Delete a team member
 export async function deleteTeamMember(id: string) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot delete team member.");

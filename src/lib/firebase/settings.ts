@@ -27,6 +27,7 @@ export async function getSettings(): Promise<SiteSettings> {
     console.warn("Firebase config is missing, returning default settings.");
     return defaultSettings;
   }
+  
   try {
     const docSnap = await getDoc(settingsDocRef);
 

@@ -23,7 +23,6 @@ const newsCollection = collection(db, 'news');
 
 export type NewsArticleData = Omit<NewsArticle, 'id' | 'createdAt' | 'date'>;
 
-// Add a new news article
 export async function addNewsArticle(articleData: NewsArticleData) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot add article.");
@@ -41,18 +40,19 @@ export async function addNewsArticle(articleData: NewsArticleData) {
   }
 }
 
-// Get all news articles, sorted by creation date
 export async function getNewsArticles(articleLimit: number = 20): Promise<NewsArticle[]> {
+  const getSeedData = () => seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
+  
   if (!isFirebaseConfigured) {
     console.warn("Firebase config is missing, returning seed news data.");
-    return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
+    return getSeedData();
   }
+
   try {
     const q = query(newsCollection, orderBy('createdAt', 'desc'), limit(articleLimit));
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      // Seed the database with example articles if it's empty
       console.log("News collection is empty. Seeding with example data...");
       for (const article of seedData) {
         const { id, date, createdAt, ...articleData } = article;
@@ -62,19 +62,7 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
           createdAt: serverTimestamp(),
         });
       }
-      // Re-fetch after seeding
-      const newSnapshot = await getDocs(q);
-      if (newSnapshot.empty) {
-        return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
-      }
-      return newSnapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toMillis() || new Date().getTime(),
-        } as NewsArticle;
-      });
+      return getSeedData();
     }
 
     return snapshot.docs.map(doc => {
@@ -87,17 +75,21 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
     });
   } catch (error) {
     console.error("Error getting news articles, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
-    return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
+    return getSeedData();
   }
 }
 
-// Get a single news article by ID
 export async function getNewsArticleById(id: string): Promise<NewsArticle | null> {
-  if (!isFirebaseConfigured) {
-    console.warn("Firebase config is missing, returning seed news data for ID:", id);
+  const getSeedArticle = () => {
     const seedArticle = seedData.find(article => article.id === id);
     return seedArticle ? { ...seedArticle, createdAt: new Date().getTime() } : null;
   }
+  
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning seed news data for ID:", id);
+    return getSeedArticle();
+  }
+  
   try {
     const docRef = doc(db, 'news', id);
     const docSnap = await getDoc(docRef);
@@ -110,23 +102,14 @@ export async function getNewsArticleById(id: string): Promise<NewsArticle | null
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as NewsArticle;
     } else {
-      const seedArticle = seedData.find(article => article.id === id);
-      if (seedArticle) {
-        return { ...seedArticle, createdAt: new Date().getTime() };
-      }
-      return null;
+      return getSeedArticle();
     }
   } catch (error) {
     console.error("Error getting news article by ID, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
-    const seedArticle = seedData.find(article => article.id === id);
-    if (seedArticle) {
-      return { ...seedArticle, createdAt: new Date().getTime() };
-    }
-    return null;
+    return getSeedArticle();
   }
 }
 
-// Update a news article
 export async function updateNewsArticle(id: string, articleData: Partial<NewsArticleData>) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot update article.");
@@ -140,7 +123,6 @@ export async function updateNewsArticle(id: string, articleData: Partial<NewsArt
   }
 }
 
-// Delete a news article
 export async function deleteNewsArticle(id: string) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot delete article.");

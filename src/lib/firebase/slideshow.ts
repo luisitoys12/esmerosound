@@ -23,7 +23,6 @@ const slideshowCollection = collection(db, 'slideshow');
 
 export type SlideData = Omit<Slide, 'id' | 'createdAt'>;
 
-// Add a new slide
 export async function addSlide(slideData: SlideData) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot add slide.");
@@ -40,12 +39,14 @@ export async function addSlide(slideData: SlideData) {
   }
 }
 
-// Get all slides, sorted by creation date
 export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
+  const getSeedData = () => seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
+
   if (!isFirebaseConfigured) {
     console.warn("Firebase config is missing, returning seed slideshow data.");
-    return seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
+    return getSeedData();
   }
+
   try {
     const q = query(slideshowCollection, orderBy('createdAt', 'desc'), limit(slideLimit));
     const snapshot = await getDocs(q);
@@ -59,18 +60,7 @@ export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
           createdAt: serverTimestamp(),
         });
       }
-      const newSnapshot = await getDocs(q);
-      if (newSnapshot.empty) {
-        return seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
-      }
-      return newSnapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toMillis() || new Date().getTime(),
-        } as Slide;
-      });
+      return getSeedData();
     }
 
     return snapshot.docs.map(doc => {
@@ -83,11 +73,10 @@ export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
     });
   } catch (error) {
     console.error("Error getting slides, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
-    return seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
+    return getSeedData();
   }
 }
 
-// Get a single slide by ID
 export async function getSlideById(id: string): Promise<Slide | null> {
    if (!isFirebaseConfigured) {
     console.warn("Firebase config is missing, returning null for slide ID:", id);
@@ -113,7 +102,6 @@ export async function getSlideById(id: string): Promise<Slide | null> {
   }
 }
 
-// Update a slide
 export async function updateSlide(id: string, slideData: Partial<SlideData>) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot update slide.");
@@ -127,7 +115,6 @@ export async function updateSlide(id: string, slideData: Partial<SlideData>) {
   }
 }
 
-// Delete a slide
 export async function deleteSlide(id: string) {
   if (!isFirebaseConfigured) {
     throw new Error("Firebase is not configured. Cannot delete slide.");
