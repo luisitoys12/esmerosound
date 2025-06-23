@@ -59,7 +59,7 @@ npm run dev
 
 ### Vercel (recomendado)
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/TU_USUARIO/esmerosound)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/luisitoys12/esmerosound)
 
 ---
 
