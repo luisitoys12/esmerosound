@@ -99,3 +99,13 @@ export interface TeamMember {
   instagramUrl?: string;
   createdAt?: number;
 }
+
+export interface SiteSettings {
+  id?: string;
+  title: string;
+  description: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  twitterUrl: string;
+  streamingSource: "azuracast" | "zenofm" | "live365";
+}

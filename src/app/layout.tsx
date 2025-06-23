@@ -8,13 +8,17 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import CookieBanner from "@/components/cookie-banner";
+import { getSettings } from "@/lib/firebase/settings";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-export const metadata: Metadata = {
-  title: "Esmerosound",
-  description: "Radio online con la mejor programación.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  return {
+    title: settings.title,
+    description: settings.description,
+  };
+}
 
 export default function RootLayout({
   children,

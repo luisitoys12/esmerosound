@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,25 +13,72 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
+import type { SiteSettings } from "@/types";
+import { getSettings, updateSettings } from "@/lib/firebase/settings";
+import { Loader2 } from "lucide-react";
 
 type StreamingSource = "azuracast" | "zenofm" | "live365";
 
 export default function SettingsPage() {
   const [selectedSource, setSelectedSource] = useState<StreamingSource>("azuracast");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const { toast } = useToast();
 
-  const handleSave = () => {
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        setIsFetching(true);
+        const settings = await getSettings();
+        setSelectedSource(settings.streamingSource);
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "No se pudieron cargar los ajustes de streaming."
+        });
+      } finally {
+        setIsFetching(false);
+      }
+    }
+    fetchSettings();
+  }, [toast]);
+
+
+  const handleSave = async () => {
     setIsLoading(true);
-    // Simulate saving the setting
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await updateSettings({ streamingSource: selectedSource });
       toast({
         title: "Ajustes Guardados",
         description: `La fuente de streaming ha sido cambiada a ${selectedSource}.`,
       });
-    }, 1000);
+    } catch (error) {
+      toast({
+          variant: "destructive",
+          title: "Error",
+          description: "No se pudieron guardar los ajustes."
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
+  if (isFetching) {
+    return (
+      <Card className="w-full max-w-2xl">
+        <CardHeader>
+          <CardTitle className="font-headline text-2xl">Ajustes de Streaming</CardTitle>
+          <CardDescription>
+            Selecciona la fuente de tu transmisión de audio en vivo.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex items-center justify-center h-64">
+           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-2xl">
