@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Slideshow from "@/components/slideshow";
 import WhatsNewDialog from "@/components/whats-new-dialog";
 import AdBanner from "@/components/ad-banner";
+import TeamSection from "@/components/team-section";
 
 export default function Home() {
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
@@ -96,6 +97,8 @@ export default function Home() {
       <section className="mb-12">
         <AdBanner />
       </section>
+
+      <TeamSection />
 
       <WhatsNewDialog isOpen={isWhatsNewOpen} onOpenChange={setIsWhatsNewOpen} />
     </div>

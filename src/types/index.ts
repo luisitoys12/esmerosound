@@ -88,3 +88,13 @@ export interface Slide {
   dataAiHint: string;
   createdAt?: number;
 }
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  imageUrl: string;
+  dataAiHint: string;
+  twitterUrl?: string;
+  instagramUrl?: string;
+}
