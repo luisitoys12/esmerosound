@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Usuario y Documentación - Esmerosound</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; line-height: 1.6; margin: 0; background-color: #f8f9fa; color: #212529; }
+        .container { max-width: 960px; margin: 2rem auto; padding: 2rem; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        header { text-align: center; border-bottom: 1px solid #dee2e6; padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        header h1 { font-size: 2.5rem; color: #0d6efd; margin-bottom: 0.5rem; }
+        header p { color: #6c757d; font-size: 1.1rem; }
+        h2 { font-size: 2rem; color: #343a40; border-bottom: 2px solid #0d6efd; padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        h3 { font-size: 1.5rem; color: #495057; margin-top: 2rem; }
+        p, li { font-size: 1rem; color: #495057; }
+        ul, ol { padding-left: 1.5rem; }
+        code { background-color: #e9ecef; padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+        .alert { padding: 1rem; margin-top: 1rem; border-radius: 4px; }
+        .alert-info { color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb; }
+        .alert-warning { color: #856404; background-color: #fff3cd; border-color: #ffeeba; }
+        .alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+        .btn { display: inline-block; font-weight: 400; color: #fff; background-color: #0d6efd; text-align: center; vertical-align: middle; cursor: pointer; border: 1px solid transparent; padding: 0.5rem 1rem; font-size: 1rem; border-radius: 0.25rem; text-decoration: none; transition: background-color .15s ease-in-out; }
+        .btn:hover { background-color: #0b5ed7; }
+        footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; margin: 1rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bienvenido a Esmerosound</h1>
+            <p>Tu guía completa para gestionar y desplegar tu aplicación de radio online.</p>
+        </header>
+
+        <nav>
+            <h3>Navegación Rápida</h3>
+            <ul>
+                <li><a href="#guia-usuario">Guía de Usuario</a></li>
+                <li><a href="#gestion">Gestión de Contenido</a></li>
+                <li><a href="#licencia">Licenciamiento</a></li>
+                <li><a href="#instalacion">Guía de Instalación y Despliegue</a></li>
+            </ul>
+        </nav>
+
+        <section id="guia-usuario">
+            <h2>Guía de Usuario</h2>
+            <p>Esta sección explica las principales características del sitio web desde la perspectiva de un oyente.</p>
+            <h3>Funcionalidades Principales</h3>
+            <ul>
+                <li><strong>Reproductor en Vivo:</strong> El corazón de la radio. Permite escuchar la transmisión en vivo, controlar el volumen y ver la información de la canción actual.</li>
+                <li><strong>Programación:</strong> Un horario semanal que muestra todos los programas, permitiendo a los usuarios saber qué esperar cada día.</li>
+                <li><strong>Podcasts:</strong> Una librería de programas grabados para escuchar on-demand en cualquier momento.</li>
+                <li><strong>Equipo:</strong> Una sección para conocer a los locutores, con perfiles individuales que incluyen biografías y enlaces a redes sociales.</li>
+                <li><strong>Top 10:</strong> Un ranking semanal de las canciones más populares, con la opción de ver los videoclips.</li>
+                <li><strong>Solicitudes y Contacto:</strong> Formularios para que los oyentes puedan interactuar, pedir canciones o enviar mensajes.</li>
+            </ul>
+        </section>
+
+        <section id="gestion">
+            <h2>Gestión de Contenido</h2>
+            <p>El panel de administración (accesible en <code>/admin</code>) te permite controlar las funcionalidades clave de tu sitio web. A continuación, se detalla qué puedes gestionar desde el panel y cómo se relaciona con lo que ven tus oyentes:</p>
+            <ul>
+                <li>
+                    <strong>Reproductor en Vivo:</strong> La información que se muestra en el reproductor (título de la canción, artista y portada) se actualiza automáticamente desde tu fuente de streaming. Desde el panel de <strong>Ajustes de Streaming</strong>, puedes configurar de dónde se obtiene esta información (Azuracast, Zenofm, etc.). El historial de canciones también se genera a partir de esta fuente.
+                </li>
+                <li>
+                    <strong>Noticias y Slideshow:</strong> A través de <strong>Gestionar Noticias</strong> y <strong>Gestionar Slideshow</strong>, puedes mantener el contenido de la página principal fresco y actualizado. Crea artículos para tu audiencia y destaca promociones o programas especiales con banners interactivos.
+                </li>
+                <li>
+                    <strong>Equipo:</strong> En la sección <strong>Gestionar Equipo</strong>, puedes añadir, editar y eliminar los perfiles de los locutores. La información que añadas aquí (nombre, rol, biografía, foto y redes sociales) se mostrará automáticamente en la página "Equipo" y en los perfiles detallados de cada miembro.
+                </li>
+                 <li>
+                    <strong>Página Web y Redes Sociales:</strong> Desde <strong>Ajustes de la Web</strong>, puedes cambiar el nombre de tu radio, la descripción principal del sitio y los enlaces a tus perfiles de redes sociales que aparecen en el encabezado y pie de página.
+                </li>
+                <li>
+                    <strong>Generador IA de Shows:</strong> Usa esta herramienta creativa en <strong>Generador IA de Shows</strong> para redactar descripciones para nuevos programas o promociones.
+                </li>
+            </ul>
+
+             <h3>Contenido Gestionado por Código</h3>
+            <p>Algunas secciones se gestionan directamente en los archivos del proyecto. Esto ofrece un control preciso y está pensado para cambios menos frecuentes:</p>
+            <ul>
+                <li><strong>Programación:</strong> El horario de los shows se encuentra en el archivo <code>src/lib/schedule-data.ts</code>. Para modificarlo, debes editar este archivo y volver a desplegar la aplicación.</li>
+                <li><strong>Podcasts y Top 10:</strong> Las listas de podcasts y las canciones del Top 10 están definidas en <code>src/app/podcasts/page.tsx</code> y <code>src/app/top10/page.tsx</code> respectivamente.</li>
+                <li><strong>Solicitudes:</strong> El formulario de "Solicitudes" está diseñado para recibir peticiones de los usuarios. Actualmente, estas solicitudes se registran en la consola del servidor, y su gestión se realiza fuera del panel de administración.</li>
+            </ul>
+        </section>
+
+        <section id="licencia">
+            <h2>Licenciamiento</h2>
+            <div class="alert alert-danger">
+                <strong>Software con Licencia:</strong> Esmerosound es un proyecto con código privado. Para utilizarlo en un entorno de producción, necesitas una clave de licencia válida.
+            </div>
+            <p>Para obtener tu clave de licencia, por favor contacta al equipo de desarrollo en la siguiente dirección de correo electrónico:</p>
+            <p><strong>Email de Contacto:</strong> <a href="mailto:cushmediagroup@gmail.com">cushmediagroup@gmail.com</a></p>
+            <p>En la raíz de tu proyecto encontrarás un archivo de ejemplo llamado <code>licencias.txt</code> con el formato de una clave de licencia.</p>
+        </section>
+
+        <section id="instalacion">
+            <h2>Guía de Instalación y Despliegue</h2>
+            <p>Esta aplicación está construida con Next.js y requiere un entorno Node.js para funcionar.</p>
+
+            <div class="alert alert-warning">
+                <strong>Importante sobre cPanel y Plesk:</strong> Los hostings tradicionales como cPanel o Plesk generalmente no soportan aplicaciones Node.js de forma nativa. A menos que tu proveedor ofrezca explícitamente soporte para Node.js (y te permita ejecutar comandos como <code>npm install</code> y <code>npm run build</code>), <strong>no podrás desplegar este proyecto en esos entornos.</strong>
+            </div>
+
+            <h3>Opción 1: Despliegue en Vercel (Recomendado)</h3>
+            <p>Vercel es la plataforma creada por los desarrolladores de Next.js y ofrece la mejor integración.</p>
+            <ol>
+                <li>Crea una cuenta en <a href="https://vercel.com" target="_blank" class="btn">Vercel</a> y conéctala a tu cuenta de GitHub, GitLab o Bitbucket.</li>
+                <li>Crea un nuevo proyecto en Vercel e importa el repositorio de tu aplicación.</li>
+                <li>Vercel detectará automáticamente que es un proyecto Next.js y configurará los comandos de build (<code>next build</code>).</li>
+                <li><strong>Configura las Variables de Entorno:</strong> En los ajustes de tu proyecto en Vercel, ve a la sección "Environment Variables" y añade todas las claves de tu archivo <code>.env.local</code> (por ejemplo, <code>NEXT_PUBLIC_FIREBASE_API_KEY</code>, etc.).</li>
+                <li>Haz clic en "Deploy". Vercel construirá y desplegará tu sitio automáticamente.</li>
+            </ol>
+
+            <h3>Opción 2: Despliegue en Netlify</h3>
+            <p>Netlify es otra excelente opción para desplegar sitios modernos.</p>
+            <ol>
+                <li>Crea una cuenta en <a href="https://netlify.com" target="_blank" class="btn">Netlify</a> y conéctala a tu proveedor de Git.</li>
+                <li>Selecciona "Add new site" -> "Import an existing project".</li>
+                <li>Elige tu repositorio. Netlify detectará la configuración de Next.js.</li>
+                <li><strong>Configura las Variables de Entorno:</strong> Ve a "Site settings" -> "Build & deploy" -> "Environment" y añade tus variables de entorno de Firebase.</li>
+                <li>Despliega tu sitio.</li>
+            </ol>
+
+            <h3>Opción 3: Despliegue con Docker (Linux/VPS)</h3>
+            <p>Usa esta opción si tienes experiencia con Docker y quieres auto-hospedar la aplicación.</p>
+            <ol>
+                <li>Asegúrate de tener Docker y Docker Compose instalados en tu servidor.</li>
+                <li>Clona el repositorio en tu servidor.</li>
+                <li>
+                    Crea un archivo <code>.env.local</code> en la raíz del proyecto y añade tus credenciales de Firebase:
+<pre><code>NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+# ... y el resto de tus variables
+</code></pre>
+                </li>
+                <li>Desde la raíz del proyecto, ejecuta el siguiente comando para construir y lanzar los contenedores:</li>
+                <li><code>docker-compose up --build -d</code></li>
+                <li>La aplicación estará disponible en los puertos 80 (HTTP) y 443 (HTTPS) de tu servidor. Necesitarás configurar un proxy inverso (como Nginx o Caddy) para gestionar los certificados SSL en un entorno de producción.</li>
+            </ol>
+             <div class="alert alert-info">
+                <strong>Base de Datos:</strong> La aplicación está diseñada para funcionar exclusivamente con <strong>Firebase Firestore</strong>. No es compatible con otras bases de datos como MariaDB o PostgreSQL sin una reescritura completa del código.
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Esmerosound. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
