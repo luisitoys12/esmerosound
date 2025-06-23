@@ -17,12 +17,17 @@ import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/types';
 import { newsArticles as seedData } from '@/lib/news-data';
 
+const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+
 const newsCollection = collection(db, 'news');
 
 export type NewsArticleData = Omit<NewsArticle, 'id' | 'createdAt' | 'date'>;
 
 // Add a new news article
 export async function addNewsArticle(articleData: NewsArticleData) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot add article.");
+  }
   try {
     const docRef = await addDoc(newsCollection, {
       ...articleData,
@@ -38,6 +43,10 @@ export async function addNewsArticle(articleData: NewsArticleData) {
 
 // Get all news articles, sorted by creation date
 export async function getNewsArticles(articleLimit: number = 20): Promise<NewsArticle[]> {
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning seed news data.");
+    return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
+  }
   try {
     const q = query(newsCollection, orderBy('createdAt', 'desc'), limit(articleLimit));
     const snapshot = await getDocs(q);
@@ -77,13 +86,18 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
       } as NewsArticle;
     });
   } catch (error) {
-    console.error("Error getting news articles, returning seed data. This is likely due to missing Firebase credentials.", error);
+    console.error("Error getting news articles, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
     return seedData.map(article => ({ ...article, createdAt: new Date().getTime() })).slice(0, articleLimit);
   }
 }
 
 // Get a single news article by ID
 export async function getNewsArticleById(id: string): Promise<NewsArticle | null> {
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning seed news data for ID:", id);
+    const seedArticle = seedData.find(article => article.id === id);
+    return seedArticle ? { ...seedArticle, createdAt: new Date().getTime() } : null;
+  }
   try {
     const docRef = doc(db, 'news', id);
     const docSnap = await getDoc(docRef);
@@ -103,7 +117,7 @@ export async function getNewsArticleById(id: string): Promise<NewsArticle | null
       return null;
     }
   } catch (error) {
-    console.error("Error getting news article by ID, returning seed data. This is likely due to missing Firebase credentials.", error);
+    console.error("Error getting news article by ID, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
     const seedArticle = seedData.find(article => article.id === id);
     if (seedArticle) {
       return { ...seedArticle, createdAt: new Date().getTime() };
@@ -114,6 +128,9 @@ export async function getNewsArticleById(id: string): Promise<NewsArticle | null
 
 // Update a news article
 export async function updateNewsArticle(id: string, articleData: Partial<NewsArticleData>) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot update article.");
+  }
   try {
     const docRef = doc(db, 'news', id);
     await updateDoc(docRef, articleData);
@@ -125,6 +142,9 @@ export async function updateNewsArticle(id: string, articleData: Partial<NewsArt
 
 // Delete a news article
 export async function deleteNewsArticle(id: string) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot delete article.");
+  }
   try {
     const docRef = doc(db, 'news', id);
     await deleteDoc(docRef);

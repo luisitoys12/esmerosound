@@ -17,12 +17,17 @@ import { db } from '@/lib/firebase';
 import type { Slide } from '@/types';
 import { slides as seedData } from '@/lib/slideshow-data';
 
+const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+
 const slideshowCollection = collection(db, 'slideshow');
 
 export type SlideData = Omit<Slide, 'id' | 'createdAt'>;
 
 // Add a new slide
 export async function addSlide(slideData: SlideData) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot add slide.");
+  }
   try {
     const docRef = await addDoc(slideshowCollection, {
       ...slideData,
@@ -37,6 +42,10 @@ export async function addSlide(slideData: SlideData) {
 
 // Get all slides, sorted by creation date
 export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning seed slideshow data.");
+    return seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
+  }
   try {
     const q = query(slideshowCollection, orderBy('createdAt', 'desc'), limit(slideLimit));
     const snapshot = await getDocs(q);
@@ -73,13 +82,17 @@ export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
       } as Slide;
     });
   } catch (error) {
-    console.error("Error getting slides, returning seed data. This is likely due to missing Firebase credentials.", error);
+    console.error("Error getting slides, returning seed data. This is likely due to missing Firebase credentials or a disabled API.", error);
     return seedData.map(slide => ({ ...slide, createdAt: new Date().getTime() })).slice(0, slideLimit);
   }
 }
 
 // Get a single slide by ID
 export async function getSlideById(id: string): Promise<Slide | null> {
+   if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning null for slide ID:", id);
+    return null;
+  }
   try {
     const docRef = doc(db, 'slideshow', id);
     const docSnap = await getDoc(docRef);
@@ -102,6 +115,9 @@ export async function getSlideById(id: string): Promise<Slide | null> {
 
 // Update a slide
 export async function updateSlide(id: string, slideData: Partial<SlideData>) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot update slide.");
+  }
   try {
     const docRef = doc(db, 'slideshow', id);
     await updateDoc(docRef, slideData);
@@ -113,6 +129,9 @@ export async function updateSlide(id: string, slideData: Partial<SlideData>) {
 
 // Delete a slide
 export async function deleteSlide(id: string) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot delete slide.");
+  }
   try {
     const docRef = doc(db, 'slideshow', id);
     await deleteDoc(docRef);

@@ -8,6 +8,8 @@ import {
 import { db } from '@/lib/firebase';
 import type { SiteSettings } from '@/types';
 
+const isFirebaseConfigured = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+
 const settingsDocRef = doc(db, 'config', 'main');
 
 const defaultSettings: SiteSettings = {
@@ -21,6 +23,10 @@ const defaultSettings: SiteSettings = {
 
 // Get site settings
 export async function getSettings(): Promise<SiteSettings> {
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase config is missing, returning default settings.");
+    return defaultSettings;
+  }
   try {
     const docSnap = await getDoc(settingsDocRef);
 
@@ -33,13 +39,16 @@ export async function getSettings(): Promise<SiteSettings> {
       return defaultSettings;
     }
   } catch (error) {
-    console.error("Error getting settings, returning default data. This is likely due to missing Firebase credentials.", error);
+    console.error("Error getting settings, returning default data. This is likely due to missing Firebase credentials or a disabled API.", error);
     return defaultSettings;
   }
 }
 
 // Update site settings
 export async function updateSettings(settingsData: Partial<SiteSettings>) {
+  if (!isFirebaseConfigured) {
+    throw new Error("Firebase is not configured. Cannot update settings.");
+  }
   try {
     // Using set with merge:true will create the document if it doesn't exist,
     // and update it if it does.
