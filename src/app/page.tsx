@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { TeamMember } from "@/types";
 import LiveClock from "@/components/live-clock";
-import { newsArticles } from "@/lib/news-data";
+import { getNewsArticles } from "@/lib/firebase/news";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -41,7 +41,9 @@ const teamMembers: TeamMember[] = [
   },
 ]
 
-export default function Home() {
+export default async function Home() {
+  const newsArticles = await getNewsArticles(3);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <LiveClock />
@@ -61,7 +63,7 @@ export default function Home() {
             >
               <CardHeader className="p-0">
                 <Image
-                  src={article.imageUrl}
+                  src={article.imageUrl || "https://placehold.co/600x400.png"}
                   alt={article.title}
                   width={600}
                   height={400}

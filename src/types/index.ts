@@ -7,11 +7,12 @@ export interface NewsArticle {
   category: string;
   date: string;
   dataAiHint: string;
+  createdAt?: number;
 }
 
 export interface Show {
   time: string;
-  name: string;
+  name:string;
   host: string;
 }
 

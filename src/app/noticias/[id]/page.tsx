@@ -1,4 +1,4 @@
-import { newsArticles } from "@/lib/news-data";
+import { getNewsArticleById } from "@/lib/firebase/news";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -7,8 +7,8 @@ import { Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function NoticiaPage({ params }: { params: { id: string } }) {
-  const article = newsArticles.find((a) => a.id === params.id);
+export default async function NoticiaPage({ params }: { params: { id: string } }) {
+  const article = await getNewsArticleById(params.id);
 
   if (!article) {
     notFound();
@@ -28,7 +28,7 @@ export default function NoticiaPage({ params }: { params: { id: string } }) {
         <Card className="overflow-hidden">
           <CardHeader className="p-0">
             <Image
-              src={article.imageUrl}
+              src={article.imageUrl || "https://placehold.co/600x400.png"}
               alt={article.title}
               width={1200}
               height={600}
