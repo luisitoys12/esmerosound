@@ -52,14 +52,7 @@ export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      console.log("Slideshow collection is empty. Seeding with example data...");
-      for (const slide of seedData) {
-        const { id, createdAt, ...slideData } = slide;
-        await addDoc(slideshowCollection, {
-          ...slideData,
-          createdAt: serverTimestamp(),
-        });
-      }
+      console.log("Slideshow collection is empty. Returning seed data as a fallback.");
       return getSeedData();
     }
 
@@ -78,9 +71,14 @@ export async function getSlides(slideLimit: number = 5): Promise<Slide[]> {
 }
 
 export async function getSlideById(id: string): Promise<Slide | null> {
+  const getSeedSlide = () => {
+    const seedSlide = seedData.find(slide => slide.id === id);
+    return seedSlide ? { ...seedSlide, createdAt: new Date().getTime() } : null;
+  }
+
    if (!isFirebaseConfigured) {
-    console.warn("Firebase config is missing, returning null for slide ID:", id);
-    return null;
+    console.warn("Firebase config is missing, returning seed slide data for ID:", id);
+    return getSeedSlide();
   }
   try {
     const docRef = doc(db, 'slideshow', id);
@@ -94,11 +92,11 @@ export async function getSlideById(id: string): Promise<Slide | null> {
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as Slide;
     } else {
-      return null;
+      return getSeedSlide();
     }
   } catch (error) {
     console.error("Error getting slide by ID.", error);
-    return null;
+    return getSeedSlide();
   }
 }
 

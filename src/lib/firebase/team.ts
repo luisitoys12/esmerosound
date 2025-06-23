@@ -52,14 +52,7 @@ export async function getTeamMembers(memberLimit: number = 20): Promise<TeamMemb
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      console.log("Team collection is empty. Seeding with example data...");
-      for (const member of seedData) {
-        const { id, createdAt, ...memberData } = member;
-        await addDoc(teamCollection, {
-          ...memberData,
-          createdAt: serverTimestamp(),
-        });
-      }
+      console.log("Team collection is empty. Returning seed data as a fallback.");
       return getSeedData();
     }
 
@@ -100,6 +93,7 @@ export async function getTeamMemberById(id: string): Promise<TeamMember | null> 
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as TeamMember;
     } else {
+      // If not in Firebase, check seed data.
       return getSeedMember();
     }
   } catch (error) {

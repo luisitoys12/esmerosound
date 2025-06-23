@@ -53,15 +53,7 @@ export async function getNewsArticles(articleLimit: number = 20): Promise<NewsAr
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      console.log("News collection is empty. Seeding with example data...");
-      for (const article of seedData) {
-        const { id, date, createdAt, ...articleData } = article;
-        await addDoc(newsCollection, {
-          ...articleData,
-          date: new Date().toISOString().split('T')[0],
-          createdAt: serverTimestamp(),
-        });
-      }
+      console.log("News collection is empty. Returning seed data as a fallback.");
       return getSeedData();
     }
 
@@ -102,6 +94,7 @@ export async function getNewsArticleById(id: string): Promise<NewsArticle | null
         createdAt: data.createdAt?.toMillis() || new Date().getTime(),
       } as NewsArticle;
     } else {
+      // If not in Firebase, check seed data.
       return getSeedArticle();
     }
   } catch (error) {

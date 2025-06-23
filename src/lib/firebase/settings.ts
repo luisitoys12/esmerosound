@@ -34,9 +34,9 @@ export async function getSettings(): Promise<SiteSettings> {
     if (docSnap.exists()) {
       return docSnap.data() as SiteSettings;
     } else {
-      // Seed the database with default settings if it's empty
-      console.log("Settings document does not exist. Seeding with default data...");
-      await setDoc(settingsDocRef, defaultSettings);
+      // Document doesn't exist, just return defaults. Don't try to write.
+      // The admin panel can create it on first save via updateSettings.
+      console.log("Settings document does not exist. Returning default settings.");
       return defaultSettings;
     }
   } catch (error) {
