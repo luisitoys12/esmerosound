@@ -66,12 +66,10 @@ ChartContainer.displayName = "Chart"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color
+    ([, cfg]) => cfg.theme || cfg.color
   )
 
-  if (!colorConfig.length) {
-    return null
-  }
+  if (!colorConfig.length) return null
 
   return (
     <style
@@ -153,9 +151,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
     const { config } = useChart()
 
     const tooltipLabel = React.useMemo(() => {
-      if (hideLabel || !payload?.length) {
-        return null
-      }
+      if (hideLabel || !payload?.length) return null
 
       const [item] = payload
       const key = `${labelKey || item.dataKey || item.name || "value"}`
@@ -173,16 +169,12 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
         )
       }
 
-      if (!value) {
-        return null
-      }
+      if (!value) return null
 
       return <div className={cn("font-medium", labelClassName)}>{value}</div>
     }, [label, labelFormatter, payload, hideLabel, labelClassName, config, labelKey])
 
-    if (!active || !payload?.length) {
-      return null
-    }
+    if (!active || !payload?.length) return null
 
     const nestLabel = payload.length === 1 && indicator !== "dot"
 
@@ -223,17 +215,14 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
                             {
                               "h-2.5 w-2.5": indicator === "dot",
                               "w-1": indicator === "line",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
+                              "w-0 border-[1.5px] border-dashed bg-transparent": indicator === "dashed",
                               "my-0.5": nestLabel && indicator === "dashed",
                             }
                           )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
+                          style={{
+                            "--color-bg": indicatorColor,
+                            "--color-border": indicatorColor,
+                          } as React.CSSProperties}
                         />
                       )
                     )}
@@ -287,15 +276,10 @@ type CustomLegendProps = {
 }
 
 const ChartLegendContent = React.forwardRef<HTMLDivElement, CustomLegendProps>(
-  (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
-    ref
-  ) => {
+  ({ className, hideIcon = false, payload, verticalAlign = "bottom", nameKey }, ref) => {
     const { config } = useChart()
 
-    if (!payload?.length) {
-      return null
-    }
+    if (!payload?.length) return null
 
     return (
       <div
@@ -313,9 +297,7 @@ const ChartLegendContent = React.forwardRef<HTMLDivElement, CustomLegendProps>(
           return (
             <div
               key={String(item.value ?? index)}
-              className={cn(
-                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
-              )}
+              className="flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
             >
               {itemConfig?.icon && !hideIcon ? (
                 <itemConfig.icon />
@@ -340,9 +322,7 @@ function getPayloadConfigFromPayload(
   payload: unknown,
   key: string
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined
-  }
+  if (typeof payload !== "object" || payload === null) return undefined
 
   const payloadPayload =
     "payload" in payload &&
