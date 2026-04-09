@@ -2,11 +2,9 @@
 
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
-import { LegendProps } from "recharts"
 
 import { cn } from "@/lib/utils"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
 export type ChartConfig = {
@@ -117,7 +115,13 @@ type CustomTooltipProps = {
   label?: string | number
   labelFormatter?: (label: unknown, payload: TooltipPayloadItem[]) => React.ReactNode
   labelClassName?: string
-  formatter?: (value: number, name: string, item: TooltipPayloadItem, index: number, payload: TooltipPayloadItem[]) => React.ReactNode
+  formatter?: (
+    value: number,
+    name: string,
+    item: TooltipPayloadItem,
+    index: number,
+    payload: TooltipPayloadItem[]
+  ) => React.ReactNode
   color?: string
   className?: string
   hideLabel?: boolean
@@ -174,15 +178,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
       }
 
       return <div className={cn("font-medium", labelClassName)}>{value}</div>
-    }, [
-      label,
-      labelFormatter,
-      payload,
-      hideLabel,
-      labelClassName,
-      config,
-      labelKey,
-    ])
+    }, [label, labelFormatter, payload, hideLabel, labelClassName, config, labelKey])
 
     if (!active || !payload?.length) {
       return null
@@ -273,10 +269,21 @@ ChartTooltipContent.displayName = "ChartTooltip"
 
 const ChartLegend = RechartsPrimitive.Legend
 
-type CustomLegendProps = LegendProps & {
+type LegendPayloadItem = {
+  value?: string | number
+  dataKey?: string | number
+  color?: string
+  type?: string
+  id?: string
+  [key: string]: unknown
+}
+
+type CustomLegendProps = {
   className?: string
   hideIcon?: boolean
   nameKey?: string
+  payload?: LegendPayloadItem[]
+  verticalAlign?: "top" | "middle" | "bottom"
 }
 
 const ChartLegendContent = React.forwardRef<HTMLDivElement, CustomLegendProps>(
@@ -299,13 +306,13 @@ const ChartLegendContent = React.forwardRef<HTMLDivElement, CustomLegendProps>(
           className
         )}
       >
-        {payload.map((item) => {
+        {payload.map((item, index) => {
           const key = `${nameKey || item.dataKey || "value"}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
           return (
             <div
-              key={item.value}
+              key={String(item.value ?? index)}
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
