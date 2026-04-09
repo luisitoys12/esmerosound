@@ -103,7 +103,16 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
-type CustomTooltipProps = TooltipProps<number, string> & {
+type CustomTooltipProps = Omit<TooltipProps<number, string>, 'payload'> & {
+  payload?: Array<{
+    dataKey?: string | number
+    name?: string | number
+    value?: number
+    color?: string
+    fill?: string
+    payload?: Record<string, unknown>
+    [key: string]: unknown
+  }>
   className?: string
   hideLabel?: boolean
   hideIndicator?: boolean
@@ -149,7 +158,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
       if (labelFormatter) {
         return (
           <div className={cn("font-medium", labelClassName)}>
-            {labelFormatter(value, payload)}
+            {labelFormatter(value, payload as RechartsPrimitive.Payload<number, string>[])}
           </div>
         )
       }
@@ -188,18 +197,18 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload?.fill || item.color
+            const indicatorColor = color || (item.payload as any)?.fill || item.color
 
             return (
               <div
-                key={item.dataKey}
+                key={String(item.dataKey)}
                 className={cn(
                   "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                   indicator === "dot" && "items-center"
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
+                  formatter(item.value, String(item.name), item as RechartsPrimitive.Payload<number, string>, index, [])
                 ) : (
                   <>
                     {itemConfig?.icon ? (
@@ -216,7 +225,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, CustomTooltipProps>
                                 indicator === "dashed",
                               "my-0.5": nestLabel && indicator === "dashed",
                             }
-                          )}
+          )
                           style={
                             {
                               "--color-bg": indicatorColor,
