@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  // No poner output: 'standalone' ni 'export' — el plugin de Netlify lo maneja
 };
 
 export default nextConfig;
