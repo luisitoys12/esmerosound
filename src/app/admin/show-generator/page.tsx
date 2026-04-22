@@ -9,7 +9,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -24,7 +23,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { generateShowDescription } from "@/ai/flows/generate-show-description";
 import { Sparkles } from "lucide-react";
 
 const formSchema = z.object({
@@ -38,6 +36,10 @@ const formSchema = z.object({
     message: "El horario de programación debe tener al menos 10 caracteres.",
   }),
 });
+
+function generateDescription(values: z.infer<typeof formSchema>): string {
+  return `${values.showName} es un espacio radial único donde la música cobra vida. Con una librería musical conformada por ${values.musicLibraryDescription.toLowerCase()}, este programa ofrece una experiencia auditiva inigualable. Sintonízanos ${values.programmingSchedule} y déjate llevar por los mejores ritmos seleccionados especialmente para ti. ¡No te pierdas ningún episodio de ${values.showName}, tu programa favorito en Esmero Sound!`;
+}
 
 export default function ShowGeneratorPage() {
   const { toast } = useToast();
@@ -57,8 +59,9 @@ export default function ShowGeneratorPage() {
     setIsLoading(true);
     setGeneratedDescription("");
     try {
-      const result = await generateShowDescription(values);
-      setGeneratedDescription(result.showDescription);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      const description = generateDescription(values);
+      setGeneratedDescription(description);
       toast({
         title: "¡Descripción Generada!",
         description: "Tu nueva descripción de show está lista.",
@@ -80,11 +83,10 @@ export default function ShowGeneratorPage() {
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="font-headline text-2xl">
-            Generador IA de Descripciones
+            Generador de Descripciones
           </CardTitle>
           <CardDescription>
-            Completa los detalles para que la IA cree una descripción para tu
-            show.
+            Completa los detalles para crear una descripción para tu show.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -111,7 +113,7 @@ export default function ShowGeneratorPage() {
                     <FormLabel>Descripción de la Librería Musical</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Ej: Una colección de rock clásico de los 80s y 90s, con enfoque en baladas de poder."
+                        placeholder="Ej: Una colección de rock clásico de los 80s y 90s."
                         {...field}
                       />
                     </FormControl>
@@ -155,7 +157,7 @@ export default function ShowGeneratorPage() {
             Descripción Generada
           </CardTitle>
           <CardDescription>
-            Aquí aparecerá la descripción creada por la IA.
+            Aquí aparecerá la descripción lista para usar.
           </CardDescription>
         </CardHeader>
         <CardContent>
